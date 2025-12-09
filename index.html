@@ -299,6 +299,7 @@
             .hero-card { padding: 40px 20px; }
             .skin-viewer { height: 200px; }
         }
+        
         #scrollTopBtn {
             position: fixed;
             bottom: 40px;
@@ -314,8 +315,25 @@
             z-index: 999;
             transition: background-color 0.2s, opacity 0.3s;
         }
+
         #scrollTopBtn:hover {
             background-color: var(--primary-hover);
+        }
+
+        #toast-close {
+            width: 24px;
+            height: 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #toast-close svg {
+            width: 20px;
+            height: 20px;
         }
     </style>
 </head>
@@ -384,6 +402,12 @@
 <div class="toast" id="toast">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
     Server-Adresse kopiert!
+    <!--button id="toast-close" style="background:none; border:none; color:inherit; cursor:pointer; font-size:1.2rem; line-height:1;">&times;</button-->
+    <button id="toast-close">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+        </svg>
+    </button>
 </div>
 
 <button id="scrollTopBtn">
@@ -446,10 +470,18 @@
         const serverAddress = "louixch.de";
         navigator.clipboard.writeText(serverAddress).then(() => {
             const toast = document.getElementById('toast');
+            const closeToast = document.getElementById('toast-close');
             toast.classList.add('show');
             setTimeout(() => {
+                //toast.classList.remove('show');
+                closeToastFunc();
+            }, 30000);
+
+            function closeToastFunc() {
                 toast.classList.remove('show');
-            }, 3000);
+                closeToast.removeEventListener('click', closeToastFunc);
+            }
+            closeToast.addEventListener('click', closeToastFunc);
         });
     }
 
