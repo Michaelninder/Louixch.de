@@ -73,7 +73,9 @@
         img.skin-viewer:hover {
             transform: scale(1.05) rotate(2deg);
             /*--skin-shardow:drop-shadow(1px 1px 16px var(--primary)) drop-shadow(-1px -1px 16px var(--primary));*/
-            --skin-shardow:drop-shadow(1px 1px 24px var(--primary)) drop-shadow(-1px -1px 24px var(--primary));
+            /*--skin-shardow:drop-shadow(1px 1px 0px var(--primary)) drop-shadow(-1px -1px 0px var(--primary));*/
+            --skin-shardow:drop-shadow(1px 1px 12px var(--primary)) drop-shadow(-1px -1px 12px var(--primary));
+            /*--skin-shardow:drop-shadow(1px 1px 1px var(--primary)) drop-shadow(-1px -1px 1px var(--primary));*/
             -webkit-filter: var(--skin-shardow);
             filter: var(--skin-shardow);
         }
@@ -114,7 +116,7 @@
         }
 
         .card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-2px);
             border-color: var(--primary);
         }
 
