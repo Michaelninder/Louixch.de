@@ -61,14 +61,21 @@
             border: 1px solid #333;
         }
 
-        .skin-viewer {
+        img.skin-viewer {
             height: 300px;
-            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
-            transition: transform 0.3s ease;
+            /*filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));*/
+            transition: transform 0.3s ease, filter 0.3s ease, rotate 3s ease;
+            --skin-shardow:drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+            -webkit-filter: var(--skin-shardow);
+            filter: var(--skin-shardow);
         }
 
-        .skin-viewer:hover {
+        img.skin-viewer:hover {
             transform: scale(1.05) rotate(2deg);
+            /*--skin-shardow:drop-shadow(1px 1px 16px var(--primary)) drop-shadow(-1px -1px 16px var(--primary));*/
+            --skin-shardow:drop-shadow(1px 1px 24px var(--primary)) drop-shadow(-1px -1px 24px var(--primary));
+            -webkit-filter: var(--skin-shardow);
+            filter: var(--skin-shardow);
         }
 
         h1 {
