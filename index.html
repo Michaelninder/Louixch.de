@@ -299,7 +299,21 @@
             .hero-card { padding: 40px 20px; }
             .skin-viewer { height: 200px; }
         }
-        
+
+        /*
+        @media (max-width: 1000px) {
+            .grid:has(> *:nth-last-child(1):nth-child(odd)) > *:last-child {
+                grid-column: span 2;
+            }
+        }
+        */
+
+        /*
+        .project-grid:has(> *:nth-last-child(1):nth-child(odd)) > *:last-child {
+            grid-column: span 2;
+        }
+        */
+
         #scrollTopBtn {
             position: fixed;
             bottom: 40px;
@@ -372,16 +386,16 @@
             <p class="card-content">Leidenschaftlicher Minecraft-Spieler mit einem Auge für Ästhetik in Resource Packs und Datapacks. Immer auf der Suche nach neuen kreativen Herausforderungen.</p>
         </div>
 
-        <!--div class="card">
+        <div class="card">
             <div class="card-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
             </div>
             <h3 class="card-title">Minecraft Server</h3>
-            <p class="card-content">mc.louixch.de<br>louixch.de</p>
+            <p class="card-content"><!--mc.louixch.de<br>louixch.de<br-->Der Minecraft-Server ist momentan offline, wird aber vorraussichtlich bald wieder online gehen.</p>
             <button class="btn btn-full" onclick="copyServer()">
                 Adresse kopieren
             </button>
-        </div-->
+        </div>
     </div>
 
     <h2 style="margin-bottom: 24px; font-size: 2rem;" id="projects">Modrinth Projekte</h2>
@@ -475,7 +489,7 @@
             setTimeout(() => {
                 //toast.classList.remove('show');
                 closeToastFunc();
-            }, 30000);
+            }, 3456);
 
             function closeToastFunc() {
                 toast.classList.remove('show');
@@ -510,13 +524,12 @@
 
             projects.forEach(project => {
                 const updated = new Date(project.updated).toLocaleDateString('de-DE');
-                const icon = project.icon_url || 'https://cdn.modrinth.com/assets/unknown_icon.png';
                 const description = truncateText(project.description || '', 111); // 123 just better
                 
                 const html = `
                     <div class="project-card">
                         <div class="project-header">
-                            <img src="${icon}" alt="${project.title}" class="project-icon">
+                            <img src="${project.icon_url}" alt="${project.title}" class="project-icon">
                             <div>
                                 <h3 class="card-title" style="margin:0; font-size:1.1rem;">${project.title}</h3>
                                 <span class="tag" style="font-size: 0.7rem; color: var(--primary); background: rgba(239,68,68,0.1); padding: 2px 8px; border-radius: 4px; margin-top: 4px; display:inline-block;">${project.project_type}</span>
