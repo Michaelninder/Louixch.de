@@ -356,3 +356,17 @@ footer a:hover {
     width: 20px;
     height: 20px;
 }
+
+::selection {
+    background: var(--primary-hover);
+    /*background: var(--primary);*/
+    color: var(--text-main);
+    text-shadow: none;
+}
+
+::-moz-selection {
+    background: var(--primary-hover);
+    /*background: var(--primary);*/
+    color: var(--text-main);
+    text-shadow: none;
+}
