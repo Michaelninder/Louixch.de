@@ -1,10 +1,14 @@
 const scrollBtn = document.getElementById("scrollTopBtn");
+const body = document.body;
+const nav = document.querySelector("nav");
 
 window.addEventListener("scroll", () => {
     if (window.scrollY > 300) {
         scrollBtn.style.display = "block";
+        body.classList.add("scrolled");
     } else {
         scrollBtn.style.display = "none";
+        body.classList.remove("scrolled");
     }
 });
 
@@ -21,7 +25,7 @@ function updateCountdown() {
     const currentYear = now.getFullYear();
     const nextYear = currentYear + 1;
     const targetDate = new Date(`January 1, ${nextYear} 00:00:00`);
-    
+
     const diff = targetDate - now;
 
     const d = Math.floor(diff / (1000 * 60 * 60 * 24));
@@ -29,9 +33,9 @@ function updateCountdown() {
     const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
     const s = Math.floor((diff % (1000 * 60)) / 1000);
 
-    document.getElementById('countdown').textContent = 
+    document.getElementById('countdown').textContent =
         `${d}T ${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-    
+
     const birthYear = 2011;
     const ageNextYear = nextYear - birthYear;
     document.getElementById('birthdayText').textContent = `Die Zeit bis zum Alter von ${ageNextYear} Jahren.`;
@@ -71,11 +75,11 @@ async function loadProjects() {
     const container = document.getElementById('modrinthContainer');
     try {
         const response = await fetch('https://api.modrinth.com/v2/user/Louixch/projects');
-        
+
         if (!response.ok) throw new Error('API Error');
-        
+
         const projects = await response.json();
-        
+
         if (projects.length === 0) {
             container.innerHTML = '<div class="card">Keine öffentlichen Projekte gefunden.</div>';
             return;
@@ -86,7 +90,7 @@ async function loadProjects() {
         projects.forEach(project => {
             const updated = new Date(project.updated).toLocaleDateString('de-DE');
             const description = truncateText(project.description || '', 111); // 123 just better
-            
+
             const html = `
                 <div class="project-card">
                     <div class="project-header">
