@@ -315,12 +315,17 @@ footer a:hover {
     color: white;
     border: none;
     padding: 12px;
-    border-radius: var(--radius-btn);
+    border-radius: 50%;
     cursor: pointer;
     font-size: 1rem;
     display: none;
     z-index: 999;
     transition: background-color 0.2s, opacity 0.3s;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #scrollTopBtn:hover {
