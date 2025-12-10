@@ -386,17 +386,57 @@ nav {
     margin-right: auto;
     width: fit-content;
     transition: all 0.3s ease;
+    backdrop-filter: blur(3px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-main);
+    font-weight: 700;
+    font-size: 1.1rem;
+    white-space: nowrap;
+    text-decoration: none;
+    transition-duration: .3s;
+}
+
+.nav-logo:hover {
+    text-decoration: none;
+    color: var(--primary);
+    cursor: var(--cursor-pointer) 12 12, pointer;
+}
+
+.nav-logo img {
+    height: 32px;
+    width: 32px;
+    border-radius: 6px;
 }
 
 body.scrolled nav {
     top: 10px;
     padding: 8px 15px;
     border-radius: var(--radius-btn);
-    /*background-color: rgba(26, 26, 26, 0.9);*/
-    /*background-color: var(--nav-bg-color);*/
     backdrop-filter: blur(10px);
     border-color: #444;
 }
+
+body.scrolled .nav-logo {
+    font-size: 1rem;
+}
+
+body.scrolled .nav-logo img {
+    height: 28px;
+    width: 28px;
+    border-radius: 5px;
+    margin-right: -2px;
+    /*display: none;*/
+}
+
 
 nav ul {
     list-style: none;
@@ -406,7 +446,7 @@ nav ul {
 }
 
 nav ul a {
-    color: var(--text-main);
+    color: var(--text-muted);
     text-decoration: none;
     font-weight: 600;
     padding: 8px 15px;
@@ -415,6 +455,11 @@ nav ul a {
 }
 
 nav ul a:hover {
+    color: var(--primary);
+    background-color: rgba(239, 68, 68, 0.1);
+}
+
+nav ul a.active {
     color: var(--primary);
     background-color: rgba(239, 68, 68, 0.1);
 }
