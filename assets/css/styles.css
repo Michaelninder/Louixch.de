@@ -435,8 +435,13 @@ body.scrolled .nav-logo img {
     border-radius: 5px;
     margin-right: -2px;
     /*display: none;*/
+    transition-duration: .3s;
+    border: 0px solid transparent; 
 }
 
+body.scrolled .nav-logo:hover img {
+    border: .5px solid var(--primary);
+}
 
 nav ul {
     list-style: none;
