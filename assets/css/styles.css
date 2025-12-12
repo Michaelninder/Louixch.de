@@ -83,6 +83,8 @@ img.skin-viewer:hover {
     /*--skin-shardow:drop-shadow(1px 1px 1px var(--primary)) drop-shadow(-1px -1px 1px var(--primary));*/
     -webkit-filter: var(--skin-shardow);
     filter: var(--skin-shardow);
+    
+    cursor: none;
 }
 
 h1 {
