@@ -118,70 +118,100 @@ async function loadProjects() {
     }
 }
 
+async function initSkinGallery() {
+    const skinListContainer = document.getElementById('skin-list');
+    const mainCanvasContainer = document.getElementById('skin-container-main');
+    const nameDisplay = document.getElementById('current-skin-name');
+    const downloadBtn = document.getElementById('current-skin-download');
 
-async function loadSkins() {
-	const container = document.getElementById("skinContainer");
-	if (!container) return;
+    if (!skinListContainer || !mainCanvasContainer) return;
 
-	const skinFiles = [
-		"Blacksuit.png",
-		"Ichneumaybeeeeee.png",
-		"Markler.png",
-		"Ordnungsamt.png",
-		"Painter.png",
-		"Pirat.png",
-		"Police.png",
-		"Red-Suit-Rose.png",
-		"Schaf.png",
-		"Soviet.png",
-	];
+    const skinFiles = [
+        "Blacksuit.png", "Ichneumaybeeeeee.png", "Markler.png", 
+        "Ordnungsamt.png", "Painter.png", "Pirat.png", 
+        "Police.png", "Red-Suit-Rose.png", "Schaf.png", "Soviet.png"
+    ];
+    const basePath = "assets/minecraft-skins/";
 
-	const skinBasePath = "assets/minecraft-skins/";
-	let cardsHtml = "";
-
-	skinFiles.forEach((fileName, index) => {
-		const skinName = fileName.replace(".png", "").replace(/-/g, " ");
-		const skinUrl = `${skinBasePath}${fileName}`;
-		const canvasId = `skin-canvas-${index}`;
-
-		cardsHtml += `
-            <div class="project-card">
-                <div class="skin-canvas-container">
-                    <canvas id="${canvasId}"></canvas>
-                </div>
-                <h3 class="card-title" style="margin-top: 15px; text-align: center; text-transform: capitalize;">
-                    ${skinName}
-                </h3>
-                <a href="${skinUrl}" download="${fileName}" class="btn btn-full" style="margin-top: auto; font-size: 0.9rem; padding: 8px;">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                    Download
-                </a>
-            </div>
-        `;
-	});
-
-	container.innerHTML = cardsHtml;
-
-	skinFiles.forEach((fileName, index) => {
-		const canvas = document.getElementById(`skin-canvas-${index}`);
-		if (canvas) {
-            let skinViewer = new skinview3d.SkinViewer({
-                canvas: canvas,
-                width: 300,
-                height: 400,
-                skin: `${skinBasePath}${fileName}`,
-            });
-
-            skinViewer.animation = new skinview3d.WalkingAnimation();
-            skinViewer.zoom = 0.9;
-
-            let control = new skinview3d.OrbitControls(skinViewer);
-            control.enableRotate = true;
-            control.enableZoom = false;
-            control.enablePan = false;
+    let skinViewer;
+    try {
+        skinViewer = new skinview3d.SkinViewer({
+            canvas: document.createElement('canvas'),
+            width: 300,
+            height: 400,
+            skin: basePath + skinFiles[0]
+        });
+        
+        mainCanvasContainer.appendChild(skinViewer.canvas);
+        
+        skinViewer.animation = new skinview3d.WalkingAnimation();
+        skinViewer.autoRotate = true; 
+        skinViewer.autoRotateSpeed = 0.5;
+        skinViewer.zoom = 0.8;
+        
+        if (typeof skinview3d.createOrbitControls === 'function') {
+            skinview3d.createOrbitControls(skinViewer);
         }
-    });
+
+    } catch (e) {
+        mainCanvasContainer.innerHTML = '<p class="error-msg">Viewer Error</p>';
+    }
+
+    const getHeadUrl = (skinUrl) => {
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.crossOrigin = "Anonymous";
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                canvas.width = 64;
+                canvas.height = 64;
+                const ctx = canvas.getContext('2d');
+                
+                // Draw Head (8,8) width 8, height 8 -> Scale to 64x64
+                // Source: x=8, y=8, w=8, h=8
+                // Dest: x=0, y=0, w=64, h=64
+                ctx.imageSmoothingEnabled = false;
+                ctx.drawImage(img, 8, 8, 8, 8, 0, 0, 64, 64);
+                
+                ctx.drawImage(img, 40, 8, 8, 8, 0, 0, 64, 64);
+                
+                resolve(canvas.toDataURL());
+            };
+            img.onerror = () => resolve(skinUrl);
+            img.src = skinUrl;
+        });
+    };
+
+    const updateMainView = (fileName, cardElement) => {
+        const fullPath = basePath + fileName;
+        const displayName = fileName.replace(".png", "").replace(/-/g, " ");
+        
+        if (skinViewer) skinViewer.loadSkin(fullPath);
+        
+        nameDisplay.textContent = displayName;
+        downloadBtn.href = fullPath;
+        downloadBtn.download = fileName;
+
+        document.querySelectorAll('.skin-bust-card').forEach(c => c.classList.remove('active'));
+        if (cardElement) cardElement.classList.add('active');
+    };
+
+    for (const [index, fileName] of skinFiles.entries()) {
+        const fullPath = basePath + fileName;
+        const headUrl = await getHeadUrl(fullPath);
+        
+        const card = document.createElement('div');
+        card.className = 'skin-bust-card';
+        if (index === 0) card.classList.add('active');
+        
+        card.innerHTML = `<img src="${headUrl}" class="skin-bust-img" alt="${fileName}">`;
+        
+        card.onclick = () => updateMainView(fileName, card);
+        skinListContainer.appendChild(card);
+    }
+
+    updateMainView(skinFiles[0], skinListContainer.firstChild);
 }
 
 loadProjects();
-loadSkins();
+initSkinGallery();
