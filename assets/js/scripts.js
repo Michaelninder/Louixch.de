@@ -118,4 +118,70 @@ async function loadProjects() {
     }
 }
 
+
+async function loadSkins() {
+	const container = document.getElementById("skinContainer");
+	if (!container) return;
+
+	const skinFiles = [
+		"Blacksuit.png",
+		"Ichneumaybeeeeee.png",
+		"Markler.png",
+		"Ordnungsamt.png",
+		"Painter.png",
+		"Pirat.png",
+		"Police.png",
+		"Red-Suit-Rose.png",
+		"Schaf.png",
+		"Soviet.png",
+	];
+
+	const skinBasePath = "assets/minecraft-skins/";
+	let cardsHtml = "";
+
+	skinFiles.forEach((fileName, index) => {
+		const skinName = fileName.replace(".png", "").replace(/-/g, " ");
+		const skinUrl = `${skinBasePath}${fileName}`;
+		const canvasId = `skin-canvas-${index}`;
+
+		cardsHtml += `
+            <div class="project-card">
+                <div class="skin-canvas-container">
+                    <canvas id="${canvasId}"></canvas>
+                </div>
+                <h3 class="card-title" style="margin-top: 15px; text-align: center; text-transform: capitalize;">
+                    ${skinName}
+                </h3>
+                <a href="${skinUrl}" download="${fileName}" class="btn btn-full" style="margin-top: auto; font-size: 0.9rem; padding: 8px;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    Download
+                </a>
+            </div>
+        `;
+	});
+
+	container.innerHTML = cardsHtml;
+
+	skinFiles.forEach((fileName, index) => {
+		const canvas = document.getElementById(`skin-canvas-${index}`);
+		if (canvas) {
+            let skinViewer = new skinview3d.SkinViewer({
+                canvas: canvas,
+                width: 300,
+                height: 400,
+                skin: `${skinBasePath}${fileName}`,
+            });
+
+            skinViewer.animation = new skinview3d.WalkingAnimation();
+            skinViewer.zoom = 0.9;
+
+            let control = new skinview3d.OrbitControls(skinViewer);
+            control.enableRotate = true;
+            control.enableZoom = false;
+            control.enablePan = false;
+        }
+    });
+}
+
 loadProjects();
+loadSkins();
