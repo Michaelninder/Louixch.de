@@ -537,9 +537,28 @@ nav ul a.active {
 
 .skin-bust-card:hover {
     background-color: #2a2a2a;
-    transform: translateY(-2px);
+    /*transform: translateY(-2px);*/
 }
 
+.skin-bust-card:active {
+    background-color: #333;
+}
+
+.skin-bust-card:hover .skin-bust-img {
+    scale: 1.05;
+    border-radius: 4.5px;
+}
+
+.skin-bust-card:active .skin-bust-img {
+    scale: 1.125;
+    border-radius: 5px;
+}
+/*
+.skin-bust-card:active .skin-bust-img {
+    scale: 1.25;
+    border-radius: 6px;
+}
+*/
 .skin-bust-card.active {
     border-color: var(--primary);
     background-color: rgba(239, 68, 68, 0.1);
@@ -549,6 +568,7 @@ nav ul a.active {
     width: 100%;
     image-rendering: pixelated;
     border-radius: 4px;
+    transition-duration: .2s;
 }
 
 @media (min-width: 800px) {
