@@ -146,9 +146,13 @@ async function initSkinGallery() {
         
         skinViewer.animation = new skinview3d.WalkingAnimation();
         skinViewer.autoRotate = true; 
-        skinViewer.autoRotateSpeed = 0.5;
+        //skinViewer.controls.enableRotate = false;
+        skinViewer.controls.enableZoom = false;
+        skinViewer.autoRotateSpeed = 0.2;
         skinViewer.zoom = 0.8;
-        
+        //skinViewer.nameTag = "Louixch";
+        skinViewer.nameTag = new skinview3d.NameTagObject("Louixch", { textStyle: "#ef4444" });
+
         if (typeof skinview3d.createOrbitControls === 'function') {
             skinview3d.createOrbitControls(skinViewer);
         }

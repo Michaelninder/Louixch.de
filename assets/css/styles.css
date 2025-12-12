@@ -570,3 +570,8 @@ nav ul a.active {
         padding-right: 5px;
     }
 }
+
+@font-face {
+    font-family: 'Minecraft';
+    src: url('/assets/fonts/minecraft.woff2') format('woff2');
+}
