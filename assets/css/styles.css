@@ -538,6 +538,7 @@ nav ul a.active {
 .skin-bust-card:hover {
     background-color: #2a2a2a;
     /*transform: translateY(-2px);*/
+    cursor: var(--cursor-pointer) 12 12, pointer;
 }
 
 .skin-bust-card:active {
@@ -569,6 +570,10 @@ nav ul a.active {
     image-rendering: pixelated;
     border-radius: 4px;
     transition-duration: .2s;
+}
+
+.skin-bust-img:hover {
+    cursor: var(--cursor-pointer) 12 12, pointer;
 }
 
 @media (min-width: 800px) {

@@ -127,10 +127,17 @@ async function initSkinGallery() {
   if (!skinListContainer || !mainCanvasContainer) return;
 
   const skinFiles = [
-    "Blacksuit.png", "Ichneumaybeeeeee.png", "Markler.png",
-    "Ordnungsamt.png", "Painter.png", "Pirat.png",
-    "Police.png", "Red-Suit-Rose.png", "Schaf.png", "Soviet.png",
     "Winter.png",
+    "Blacksuit.png",
+    "Ende2025.png",
+    "Markler.png",
+    "Ordnungsamt.png",
+    "Painter.png",
+    "Pirat.png",
+    "Police.png",
+    "Red-Suit-Rose.png",
+    "Schaf.png",
+    "Soviet.png",
   ];
   const basePath = "assets/minecraft-skins/";
 
