@@ -127,9 +127,9 @@ async function initSkinGallery() {
   if (!skinListContainer || !mainCanvasContainer) return;
 
   const skinFiles = [
-    "Winter.png",
+    "Winter2025.png",
     "Blacksuit.png",
-    "Ende2025.png",
+    "Ende-2025.png",
     "Markler.png",
     "Ordnungsamt.png",
     "Painter.png",
