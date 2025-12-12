@@ -17,7 +17,7 @@
     </a>
     <ul>
         <li><a href="#projects">Projekte</a></li>
-        <li><a href="#skins">Skins</a></li>
+        <!--li><a href="#projects">Projekte</a></li-->
     </ul>
 </nav>
 <div class="container">
@@ -25,7 +25,7 @@
         <img src="" alt="Louixch Skin" id="skinImage" class="skin-viewer">
         <h1>Louixch</h1>
         <p class="subtitle">Ehemaliger Mitgründer des XP-Craft.de Netzwerks, Resource Pack Artist und Modding-Enthusiast.</p>
-
+        
         <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
             <a href="#projects" class="btn">Projekte ansehen</a>
             <button class="btn btn-outline" onclick="copyServer()">
@@ -69,11 +69,6 @@
     <div class="project-grid" id="modrinthContainer">
         <div class="card">Lade Projekte von Modrinth...</div>
     </div>
-
-    <h2 style="margin-top: 60px; margin-bottom: 24px; font-size: 2rem;" id="skins">Skin Liste</h2>
-    <div class="project-grid" id="minecraftSkinsContainer">
-        <!-- Minecraft skins will be loaded here -->
-    </div>
 </div>
 
 <footer>
@@ -88,6 +83,7 @@
 <div class="toast" id="toast">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
     Server-Adresse kopiert!
+    <!--button id="toast-close" style="background:none; border:none; color:inherit; cursor:pointer; font-size:1.2rem; line-height:1;">&times;</button-->
     <button id="toast-close">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
@@ -101,7 +97,12 @@
     </svg>
 </button>
 
-<script src="https://unpkg.com/skinview3d@latest/dist/skinview3d.min.js"></script>
+<!--button id="scrollTopBtn">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:22px;height:22px;">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
+    </svg>
+</button-->
+
 <script src="assets/js/scripts.js"></script>
 
 </body>
