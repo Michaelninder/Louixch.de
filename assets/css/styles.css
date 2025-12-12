@@ -575,3 +575,11 @@ nav ul a.active {
     font-family: 'Minecraft';
     src: url('/assets/fonts/minecraft.woff2') format('woff2');
 }
+
+.section-heading {
+    font-size: 2rem;
+    margin-bottom: 24px;
+}
+section {
+    margin-top: 40px;
+}
