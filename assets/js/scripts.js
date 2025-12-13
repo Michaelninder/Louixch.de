@@ -143,17 +143,17 @@ async function initSkinGallery() {
     "2024-Skin9.png",
     "2024-Skin11.png",
 
-    "2025-Winter.png",
-    "2025-Winter.png",
-    "2025-Winter.png",
-    "2025-Winter.png",
-    "2025-Winter.png",
-    "2025-Winter.png",
-    "2025-Winter.png",
-    "2025-Winter.png",
-    "2025-Winter.png",
-    "2025-Winter.png",
-    "2025-Winter.png",
+    "2025-Base-Skin.png",
+    "placeholder.png",
+    "placeholder.png",
+    "placeholder.png",
+    "placeholder.png",
+    "placeholder.png",
+    "placeholder.png",
+    "placeholder.png",
+    "placeholder.png",
+    "placeholder.png",
+    "placeholder.png",
   ];
   const basePath = "assets/minecraft-skins/";
 
@@ -200,8 +200,11 @@ async function initSkinGallery() {
         // Source: x=8, y=8, w=8, h=8
         // Dest: x=0, y=0, w=64, h=64
         ctx.imageSmoothingEnabled = false;
+        //ctx.drawImage(img, 8, 8, 8, 8, 0, 0, 64, 64);
         ctx.drawImage(img, 8, 8, 8, 8, 0, 0, 64, 64);
+        //ctx.drawImage(img, 40, 8, 8, 8, 0, 0, 64, 64);
 
+        //ctx.drawImage(img, 8, 8, 8, 8, 0, 0, 64, 64);
         ctx.drawImage(img, 40, 8, 8, 8, 0, 0, 64, 64);
 
         resolve(canvas.toDataURL());
