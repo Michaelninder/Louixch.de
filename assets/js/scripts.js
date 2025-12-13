@@ -3,21 +3,20 @@ const body = document.body;
 const nav = document.querySelector("nav");
 const preloader = document.querySelector(".preloader");
 
-
 scrollBtn.style.display = "none";
 
 window.addEventListener("scroll", () => {
-  if (window.scrollY > 300) {
-    scrollBtn.style.display = "block";
-    body.classList.add("scrolled");
-  } else {
-    scrollBtn.style.display = "none";
-    body.classList.remove("scrolled");
-  }
+    if (window.scrollY > 300) {
+        scrollBtn.style.display = "block";
+        body.classList.add("scrolled");
+    } else {
+        scrollBtn.style.display = "none";
+        body.classList.remove("scrolled");
+    }
 });
 
 scrollBtn.addEventListener("click", () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
 document.getElementById('skinImage').src = 'https://visage.surgeplay.com/full/512/Louixch';
@@ -25,77 +24,77 @@ document.getElementById('skinImage').src = 'https://visage.surgeplay.com/full/51
 document.getElementById('year').textContent = new Date().getFullYear();
 
 function updateCountdown() {
-  const now = new Date();
-  const currentYear = now.getFullYear();
-  const nextYear = currentYear + 1;
-  const targetDate = new Date(`January 1, ${nextYear} 00:00:00`);
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const nextYear = currentYear + 1;
+    const targetDate = new Date(`January 1, ${nextYear} 00:00:00`);
 
-  const diff = targetDate - now;
+    const diff = targetDate - now;
 
-  const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-  const s = Math.floor((diff % (1000 * 60)) / 1000);
+    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const s = Math.floor((diff % (1000 * 60)) / 1000);
 
-  document.getElementById('countdown').textContent =
-    `${d}T ${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    document.getElementById('countdown').textContent =
+        `${d}T ${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
 
-  const birthYear = 2011;
-  const ageNextYear = nextYear - birthYear;
-  document.getElementById('birthdayText').textContent = `Die Zeit bis zum Alter von ${ageNextYear} Jahren.`;
+    const birthYear = 2011;
+    const ageNextYear = nextYear - birthYear;
+    document.getElementById('birthdayText').textContent = `Die Zeit bis zum Alter von ${ageNextYear} Jahren.`;
 }
 
 setInterval(updateCountdown, 1000);
 updateCountdown();
 
 function copyServer() {
-  //const serverAddress = "mc.louixch.de";
-  const serverAddress = "louixch.de";
-  navigator.clipboard.writeText(serverAddress).then(() => {
-    const toast = document.getElementById('toast');
-    const closeToast = document.getElementById('toast-close');
-    toast.classList.add('show');
-    setTimeout(() => {
-      //toast.classList.remove('show');
-      closeToastFunc();
-    }, 3456);
+    //const serverAddress = "mc.louixch.de";
+    const serverAddress = "louixch.de";
+    navigator.clipboard.writeText(serverAddress).then(() => {
+        const toast = document.getElementById('toast');
+        const closeToast = document.getElementById('toast-close');
+        toast.classList.add('show');
+        setTimeout(() => {
+            //toast.classList.remove('show');
+            closeToastFunc();
+        }, 3456);
 
-    function closeToastFunc() {
-      toast.classList.remove('show');
-      closeToast.removeEventListener('click', closeToastFunc);
-    }
-    closeToast.addEventListener('click', closeToastFunc);
-  });
+        function closeToastFunc() {
+            toast.classList.remove('show');
+            closeToast.removeEventListener('click', closeToastFunc);
+        }
+        closeToast.addEventListener('click', closeToastFunc);
+    });
 }
 
 function truncateText(text, maxLength) {
-  if (text.length > maxLength) {
-    return text.substring(0, maxLength) + '...';
-  }
-  return text;
+    if (text.length > maxLength) {
+        return text.substring(0, maxLength) + '...';
+    }
+    return text;
 }
 
 async function loadProjects() {
-  const container = document.getElementById('modrinthContainer');
-  try {
-    const response = await fetch('https://api.modrinth.com/v2/user/Louixch/projects');
+    const container = document.getElementById('modrinthContainer');
+    try {
+        const response = await fetch('https://api.modrinth.com/v2/user/Louixch/projects');
 
-    if (!response.ok) throw new Error('API Error');
+        if (!response.ok) throw new Error('API Error');
 
-    const projects = await response.json();
+        const projects = await response.json();
 
-    if (projects.length === 0) {
-      container.innerHTML = '<div class="card">Keine öffentlichen Projekte gefunden.</div>';
-      return;
-    }
+        if (projects.length === 0) {
+            container.innerHTML = '<div class="card">Keine öffentlichen Projekte gefunden.</div>';
+            return;
+        }
 
-    container.innerHTML = '';
+        container.innerHTML = '';
 
-    projects.forEach(project => {
-      const updated = new Date(project.updated).toLocaleDateString('de-DE');
-      const description = truncateText(project.description || '', 111); // 123 just better
+        projects.forEach(project => {
+            const updated = new Date(project.updated).toLocaleDateString('de-DE');
+            const description = truncateText(project.description || '', 111); // 123 just better
 
-      const html = `
+            const html = `
                 <div class="project-card">
                     <div class="project-header">
                         <img src="${project.icon_url}" alt="${project.title}" class="project-icon">
@@ -114,154 +113,196 @@ async function loadProjects() {
                     </div>
                 </div>
             `;
-      container.innerHTML += html;
-    });
+            container.innerHTML += html;
+        });
 
-  } catch (e) {
-    container.innerHTML = '<div class="card error-msg">Projekte konnten nicht geladen werden.</div>';
-  }
+    } catch (e) {
+        container.innerHTML = '<div class="card error-msg">Projekte konnten nicht geladen werden.</div>';
+    }
 }
 
 async function initSkinGallery() {
-  //const skinListContainer = document.getElementById('skin-list');
-  const skinListContainer = document.getElementsByClassName('skin-list-grid-inner')[0];
-  const mainCanvasContainer = document.getElementById('skin-container-main');
-  const nameDisplay = document.getElementById('current-skin-name');
-  const downloadBtn = document.getElementById('current-skin-download');
+    //const skinListContainer = document.getElementById('skin-list');
+    const skinListContainer = document.getElementsByClassName('skin-list-grid-inner')[0];
+    const mainCanvasContainer = document.getElementById('skin-container-main');
+    const nameDisplay = document.getElementById('current-skin-name');
+    const downloadBtn = document.getElementById('current-skin-download');
 
-  if (!skinListContainer || !mainCanvasContainer) return;
+    if (!skinListContainer || !mainCanvasContainer) return;
 
-  const skinFiles = [
-    "2025-Winter.png",
-    "2025-Blacksuit.png",
-    "2025-Ende.png",
-    "2025-Markler.png",
-    "2025-Ordnungsamt.png",
-    "2025-Painter.png",
-    "2025-Pirat.png",
-    "2025-Police.png",
-    "2025-Red-Suit-Rose.png",
-    "2025-Schaf.png",
-    "2025-Soviet.png",
+    const skinFiles = [
+        "2025-Winter.png",
+        "2025-Blacksuit.png",
+        "2025-Ende.png",
+        "2025-Markler.png",
+        "2025-Ordnungsamt.png",
+        "2025-Painter.png",
+        "2025-Pirat.png",
+        "2025-Police.png",
+        "2025-Red-Suit-Rose.png",
+        "2025-Schaf.png",
+        "2025-Soviet.png",
 
-    "2024-Skin9.png",
-    "2024-Skin11.png",
+        "2024-Skin9.png",
+        "2024-Skin11.png",
 
-    "2025-Base-Skin-smallHands.png",
-    "2025-Base-Skin-largeHands.png",
+        "2025-Base-Skin-smallHands.png",
+        "2025-Base-Skin-largeHands.png",
 
-    "_dev.png",
+        "_dev.png",
 
-    "placeholder.png",
-    "placeholder.png",
-    "placeholder.png",
-    "placeholder.png",
-    "placeholder.png",
-    "placeholder.png",
-    "placeholder.png",
-    "placeholder.png",
-  ];
-  const basePath = "assets/minecraft-skins/";
+        "placeholder.png",
+        "placeholder.png",
+        "placeholder.png",
+        "placeholder.png",
+        "placeholder.png",
+        "placeholder.png",
+        "placeholder.png",
+        "placeholder.png",
+    ];
+    const basePath = "assets/minecraft-skins/";
 
-  let skinViewer;
-  try {
-    skinViewer = new skinview3d.SkinViewer({
-      canvas: document.createElement('canvas'),
-      width: 300,
-      height: 400,
-      skin: basePath + skinFiles[0]
-    });
+    let skinViewer;
+    try {
+        skinViewer = new skinview3d.SkinViewer({
+            canvas: document.createElement('canvas'),
+            width: 300,
+            height: 400,
+            skin: basePath + skinFiles[0]
+        });
 
-    mainCanvasContainer.appendChild(skinViewer.canvas);
+        mainCanvasContainer.appendChild(skinViewer.canvas);
 
-    //skinViewer.animation = new skinview3d.WalkingAnimation();
-    skinViewer.animation = new skinview3d.IdleAnimation();
-    skinViewer.autoRotate = true;
-    //skinViewer.controls.enableRotate = false;
-    skinViewer.controls.enableZoom = false;
-    skinViewer.autoRotateSpeed = 0.035;
-    skinViewer.zoom = 0.8;
-    //skinViewer.nameTag = "Louixch";
-    skinViewer.nameTag = new skinview3d.NameTagObject("Louixch", { textStyle: "#ef4444" });
+        //skinViewer.animation = new skinview3d.WalkingAnimation();
+        skinViewer.animation = new skinview3d.IdleAnimation();
+        skinViewer.autoRotate = true;
+        //skinViewer.controls.enableRotate = false;
+        skinViewer.controls.enableZoom = false;
+        skinViewer.autoRotateSpeed = 0.035;
+        skinViewer.zoom = 0.8;
+        //skinViewer.nameTag = "Louixch";
+        skinViewer.nameTag = new skinview3d.NameTagObject("Louixch", { textStyle: "#ef4444" });
 
-    if (typeof skinview3d.createOrbitControls === 'function') {
-      skinview3d.createOrbitControls(skinViewer);
+        if (typeof skinview3d.createOrbitControls === 'function') {
+            skinview3d.createOrbitControls(skinViewer);
+        }
+
+    } catch (e) {
+        mainCanvasContainer.innerHTML = '<p class="error-msg">Viewer Error</p>';
     }
 
-  } catch (e) {
-    mainCanvasContainer.innerHTML = '<p class="error-msg">Viewer Error</p>';
-  }
+    const getHeadUrl = (skinUrl) => {
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.crossOrigin = "Anonymous";
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                canvas.width = 64;
+                canvas.height = 64;
+                const ctx = canvas.getContext('2d');
 
-  const getHeadUrl = (skinUrl) => {
-    return new Promise((resolve) => {
-      const img = new Image();
-      img.crossOrigin = "Anonymous";
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        canvas.width = 64;
-        canvas.height = 64;
-        const ctx = canvas.getContext('2d');
+                // Draw Head (8,8) width 8, height 8 -> Scale to 64x64
+                // Source: x=8, y=8, w=8, h=8
+                // Dest: x=0, y=0, w=64, h=64
+                ctx.imageSmoothingEnabled = false;
+                //ctx.drawImage(img, 8, 8, 8, 8, 0, 0, 64, 64);
+                ctx.drawImage(img, 8, 8, 8, 8, 0, 0, 64, 64);
+                //ctx.drawImage(img, 40, 8, 8, 8, 0, 0, 64, 64);
 
-        // Draw Head (8,8) width 8, height 8 -> Scale to 64x64
-        // Source: x=8, y=8, w=8, h=8
-        // Dest: x=0, y=0, w=64, h=64
-        ctx.imageSmoothingEnabled = false;
-        //ctx.drawImage(img, 8, 8, 8, 8, 0, 0, 64, 64);
-        ctx.drawImage(img, 8, 8, 8, 8, 0, 0, 64, 64);
-        //ctx.drawImage(img, 40, 8, 8, 8, 0, 0, 64, 64);
+                //ctx.drawImage(img, 8, 8, 8, 8, 0, 0, 64, 64);
+                ctx.drawImage(img, 40, 8, 8, 8, 0, 0, 64, 64);
 
-        //ctx.drawImage(img, 8, 8, 8, 8, 0, 0, 64, 64);
-        ctx.drawImage(img, 40, 8, 8, 8, 0, 0, 64, 64);
+                resolve(canvas.toDataURL());
+            };
+            img.onerror = () => resolve(skinUrl);
+            img.src = skinUrl;
+        });
+    };
 
-        resolve(canvas.toDataURL());
-      };
-      img.onerror = () => resolve(skinUrl);
-      img.src = skinUrl;
-    });
-  };
+    const updateMainView = (fileName, cardElement) => {
+        const fullPath = basePath + fileName;
+        const displayName = fileName.replace(".png", "").replace(/-/g, " ");
 
-  const updateMainView = (fileName, cardElement) => {
-    const fullPath = basePath + fileName;
-    const displayName = fileName.replace(".png", "").replace(/-/g, " ");
+        if (skinViewer) skinViewer.loadSkin(fullPath);
 
-    if (skinViewer) skinViewer.loadSkin(fullPath);
+        nameDisplay.textContent = displayName;
+        downloadBtn.href = fullPath;
+        downloadBtn.download = fileName;
 
-    nameDisplay.textContent = displayName;
-    downloadBtn.href = fullPath;
-    downloadBtn.download = fileName;
+        document.querySelectorAll('.skin-bust-card').forEach(c => c.classList.remove('active'));
+        if (cardElement) cardElement.classList.add('active');
+    };
 
-    document.querySelectorAll('.skin-bust-card').forEach(c => c.classList.remove('active'));
-    if (cardElement) cardElement.classList.add('active');
-  };
+    for (const [index, fileName] of skinFiles.entries()) {
+        const fullPath = basePath + fileName;
+        const headUrl = await getHeadUrl(fullPath);
 
-  for (const [index, fileName] of skinFiles.entries()) {
-    const fullPath = basePath + fileName;
-    const headUrl = await getHeadUrl(fullPath);
+        const card = document.createElement('div');
+        card.className = 'skin-bust-card';
+        if (index === 0) card.classList.add('active');
 
-    const card = document.createElement('div');
-    card.className = 'skin-bust-card';
-    if (index === 0) card.classList.add('active');
+        card.innerHTML = `<img src="${headUrl}" class="skin-bust-img" alt="${fileName}">`;
 
-    card.innerHTML = `<img src="${headUrl}" class="skin-bust-img" alt="${fileName}">`;
+        card.onclick = () => updateMainView(fileName, card);
+        skinListContainer.appendChild(card);
+    }
 
-    card.onclick = () => updateMainView(fileName, card);
-    skinListContainer.appendChild(card);
-  }
-
-  updateMainView(skinFiles[0], skinListContainer.firstChild);
+    updateMainView(skinFiles[0], skinListContainer.firstChild);
 }
 
 function hidePreloader() {
-  preloader.classList.add("hidden");
-  body.classList.add("loaded");
+    preloader.classList.add("hidden");
+    body.classList.add("loaded");
 }
 
+const scrollOffsetMap = {
+    "#info-cards": 40,
+};
+
+const handleHashScroll = () => {
+    const hash = window.location.hash;
+
+    if (hash) {
+        const targetElement = document.querySelector(hash);
+
+        if (targetElement) {
+            const offset = scrollOffsetMap[hash] || 0;
+            const elementPosition =
+                targetElement.getBoundingClientRect().top +
+                window.scrollY;
+            const offsetPosition = elementPosition - offset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: "smooth",
+            });
+        }
+    }
+};
+
+const bodyIsLoaded = () => body.classList.contains("loaded");
+
 Promise.all([
-  loadProjects(),
-  initSkinGallery()
+    loadProjects(),
+    initSkinGallery()
 ]).then(() => {
-  hidePreloader();
+    hidePreloader();
+    if (bodyIsLoaded()) {
+        setTimeout(handleHashScroll, 3000);
+    } else {
+        const observer = new MutationObserver((mutations, obs) => {
+            if (bodyIsLoaded()) {
+                setTimeout(handleHashScroll, 3000);
+                obs.disconnect();
+            }
+        });
+        observer.observe(body, { attributes: true, attributeFilter: ['class'] });
+    }
 }).catch((error) => {
-  console.error("Error loading content:", error);
-  hidePreloader();
+    console.error("Error loading content:", error);
+    hidePreloader();
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    window.addEventListener("hashchange", handleHashScroll);
 });

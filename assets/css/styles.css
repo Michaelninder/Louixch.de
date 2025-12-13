@@ -57,7 +57,7 @@ body:not(.loaded) > *:not(.preloader) {
         opacity calc(var(--preloader-transition-duration) + 1s) ease,
         max-height var(--preloader-transition-duration) ease,
         min-height var(--preloader-transition-duration) ease;
-    z-index: 10000;
+    z-index: -10000; /* behind navbar (cooler) */
 }
 
 .dot {
