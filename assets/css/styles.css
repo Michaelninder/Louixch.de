@@ -40,6 +40,43 @@ body {
     cursor: var(--cursor-default) 12 12, auto;
 }
 
+.preloader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--bg-color);
+    transition-duration: 2s;
+}
+
+.dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--primary);
+    animation: scaleDot 1.5s infinite ease-in-out;
+}
+
+.preloader.hidden {
+    max-height: 0;
+    min-height: 0;
+}
+
+@keyframes scaleDot {
+  0% {
+    transform: scale(0);
+    background-color: var(--primary);
+  }
+  50% {
+    transform: scale(1);
+    background-color: var(--primary-hover);
+  }
+  100% {
+    transform: scale(0);
+    background-color: var(--primary);
+  }
+}
+
 a:hover, button:hover {
     cursor: var(--cursor-pointer) 12 12, pointer;
 }

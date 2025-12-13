@@ -1,6 +1,10 @@
 const scrollBtn = document.getElementById("scrollTopBtn");
 const body = document.body;
 const nav = document.querySelector("nav");
+const preloader = document.querySelector(".preloader");
+
+
+scrollBtn.style.display = "none";
 
 window.addEventListener("scroll", () => {
   if (window.scrollY > 300) {
@@ -247,5 +251,17 @@ async function initSkinGallery() {
   updateMainView(skinFiles[0], skinListContainer.firstChild);
 }
 
-loadProjects();
-initSkinGallery();
+function hidePreloader() {
+  preloader.classList.add("hidden");
+  body.classList.add("loaded");
+}
+
+Promise.all([
+  loadProjects(),
+  initSkinGallery()
+]).then(() => {
+  hidePreloader();
+}).catch((error) => {
+  console.error("Error loading content:", error);
+  hidePreloader();
+});
