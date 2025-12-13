@@ -146,18 +146,18 @@ async function initSkinGallery() {
         //"2024-Skin9.png",
         //"2024-Skin11.png",
 
-        "2025-Base-Skin-smallHands.png",
-        "2025-Base-Skin-largeHands.png",
+        //"2025-Base-Skin-smallHands.png",
+        //"2025-Base-Skin-largeHands.png",
 
         //"_dev.png",
 
-        "placeholder.png",
-        "placeholder.png",
-        "placeholder.png",
-        "placeholder.png",
-        "placeholder.png",
-        "placeholder.png",
-        "placeholder.png",
+        //"placeholder.png",
+        //"placeholder.png",
+        //"placeholder.png",
+        //"placeholder.png",
+        //"placeholder.png",
+        //"placeholder.png",
+        //"placeholder.png",
         "placeholder.png",
         "placeholder.png",
         "placeholder.png",
@@ -178,7 +178,7 @@ async function initSkinGallery() {
 
         //skinViewer.animation = new skinview3d.WalkingAnimation();
         skinViewer.animation = new skinview3d.IdleAnimation();
-        skinViewer.autoRotate = true;
+        skinViewer.autoRotate = localStorage.getItem("skinAutoRotate") === "true" ? true : false;
         //skinViewer.controls.enableRotate = false;
         skinViewer.controls.enableZoom = false;
         skinViewer.autoRotateSpeed = 0.035;
