@@ -119,7 +119,8 @@ async function loadProjects() {
 }
 
 async function initSkinGallery() {
-  const skinListContainer = document.getElementById('skin-list');
+  //const skinListContainer = document.getElementById('skin-list');
+  const skinListContainer = document.getElementsByClassName('skin-list-grid-inner')[0];
   const mainCanvasContainer = document.getElementById('skin-container-main');
   const nameDisplay = document.getElementById('current-skin-name');
   const downloadBtn = document.getElementById('current-skin-download');
@@ -127,6 +128,29 @@ async function initSkinGallery() {
   if (!skinListContainer || !mainCanvasContainer) return;
 
   const skinFiles = [
+    "Winter.png",
+    "Blacksuit.png",
+    "Ende-2025.png",
+    "Markler.png",
+    "Ordnungsamt.png",
+    "Painter.png",
+    "Pirat.png",
+    "Police.png",
+    "Red-Suit-Rose.png",
+    "Schaf.png",
+    "Soviet.png",
+
+    "Winter.png",
+    "Blacksuit.png",
+    "Ende-2025.png",
+    "Markler.png",
+    "Ordnungsamt.png",
+    "Painter.png",
+    "Pirat.png",
+    "Police.png",
+    "Red-Suit-Rose.png",
+    "Schaf.png",
+    "Soviet.png",
     "Winter.png",
     "Blacksuit.png",
     "Ende-2025.png",

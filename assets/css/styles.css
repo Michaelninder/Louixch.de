@@ -1,10 +1,13 @@
 :root {
     --bg-color: #0f0f0f;
     --card-color: #1a1a1a;
+    --card-hover-color: #2a2a2a;
+    --card-active-color: #333;
     --text-main: #f0f0f0;
     --text-muted: #a0a0a0;
     --primary: #ef4444;
     --primary-hover: #dc2626;
+    --primary-transparent: rgba(239, 68, 68, 0.1);
     --radius-lg: 32px;
     --radius-md: 24px;
     --radius-btn: 9999px;
@@ -344,6 +347,11 @@ footer a:hover {
 
 #scrollTopBtn:hover {
     background-color: var(--primary-hover);
+    cursor: var(--cursor-pointer) 12 12, pointer;
+}
+
+#scrollTopBtn svg:hover {
+    cursor: var(--cursor-pointer) 12 12, pointer;
 }
 
 #toast-close {
@@ -351,7 +359,7 @@ footer a:hover {
     height: 24px;
     background: none;
     border: none;
-    cursor: pointer;
+    cursor: var(--cursor-pointer) 12 12, pointer;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -518,9 +526,35 @@ nav ul a.active {
 }
 
 .skin-list-grid {
+    /*display: grid;*/
+    display: block;
+    /* grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); */
+    /*gap: 15px;*/
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary) var(--primary-transparent);
+    /*padding-right: 15px; /* nut working */
+}
+
+.skin-list-grid::-webkit-scrollbar {
+    width: 10px;
+    background-color: var(--primary-hover);
+}
+
+.skin-list-grid::-webkit-scrollbar-thumb {
+    background-color: var(--primary);
+    border-radius: 5px;
+}
+
+.skin-list-grid::-webkit-scrollbar-track {
+    background-color: var(--primary-hover);
+}
+
+.skin-list-grid-inner {
+    gap: 15px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-    gap: 15px;
+    margin-right: 10px;
 }
 
 .skin-bust-card {
@@ -536,23 +570,23 @@ nav ul a.active {
 }
 
 .skin-bust-card:hover {
-    background-color: #2a2a2a;
+    background-color: var(--card-hover-color);
     /*transform: translateY(-2px);*/
     cursor: var(--cursor-pointer) 12 12, pointer;
 }
 
 .skin-bust-card:active {
-    background-color: #333;
+    background-color: var(--card-active-color);
 }
 
 .skin-bust-card:hover .skin-bust-img {
     scale: 1.05;
-    border-radius: 4.5px;
+    border-radius: 5px;
 }
 
 .skin-bust-card:active .skin-bust-img {
     scale: 1.125;
-    border-radius: 5px;
+    border-radius: 7px;
 }
 /*
 .skin-bust-card:active .skin-bust-img {
@@ -562,7 +596,11 @@ nav ul a.active {
 */
 .skin-bust-card.active {
     border-color: var(--primary);
-    background-color: rgba(239, 68, 68, 0.1);
+    background-color: var(--primary-transparent);
+}
+
+.skin-bust-card.active:active {
+    border-color: var(--primary-hover);
 }
 
 .skin-bust-img {
