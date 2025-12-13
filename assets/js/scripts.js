@@ -143,14 +143,17 @@ async function initSkinGallery() {
         "2025-Schaf.png",
         "2025-Soviet.png",
 
-        "2024-Skin9.png",
-        "2024-Skin11.png",
+        //"2024-Skin9.png",
+        //"2024-Skin11.png",
 
         "2025-Base-Skin-smallHands.png",
         "2025-Base-Skin-largeHands.png",
 
-        "_dev.png",
+        //"_dev.png",
 
+        "placeholder.png",
+        "placeholder.png",
+        "placeholder.png",
         "placeholder.png",
         "placeholder.png",
         "placeholder.png",
@@ -181,7 +184,7 @@ async function initSkinGallery() {
         skinViewer.autoRotateSpeed = 0.035;
         skinViewer.zoom = 0.8;
         //skinViewer.nameTag = "Louixch";
-        skinViewer.nameTag = new skinview3d.NameTagObject("Louixch", { textStyle: "#ef4444" });
+        //skinViewer.nameTag = new skinview3d.NameTagObject("Louixch", { textStyle: "#ef4444" }); // NOT WANTED
 
         if (typeof skinview3d.createOrbitControls === 'function') {
             skinview3d.createOrbitControls(skinViewer);
@@ -309,13 +312,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-
+function getRandomArbitrary(min, max) {
+  return Math.random() * (max - min) + min;
+}
 
 
 
 document.addEventListener('DOMContentLoaded', () => {
     const snowContainer = document.querySelector('.snow-container');
-    const numberOfSnowballs = 50;
+    const numberOfSnowballs = localStorage.getItem("snowballCount") || getRandomArbitrary(30, 60);
 
     for (let i = 0; i < numberOfSnowballs; i++) {
         const snowball = document.createElement('div');
