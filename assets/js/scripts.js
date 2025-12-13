@@ -143,8 +143,9 @@ async function initSkinGallery() {
     "2024-Skin9.png",
     "2024-Skin11.png",
 
-    "2025-Base-Skin.png",
-    "placeholder.png",
+    "2025-Base-Skin-smallHands.png",
+    "2025-Base-Skin-largeHands.png",
+    
     "placeholder.png",
     "placeholder.png",
     "placeholder.png",
