@@ -18,6 +18,8 @@
 
     --nav-bg-color: #1a1a1a96;
     --radius-md: 16px;
+
+    --preloader-transition-duration: 2s;
 }
 
 * {
@@ -40,18 +42,31 @@ body {
     cursor: var(--cursor-default) 12 12, auto;
 }
 
+
+body:not(.loaded) > *:not(.preloader) {
+  display: none;
+}
+
 .preloader {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     background-color: var(--bg-color);
-    transition-duration: 2s;
+    transition:
+        opacity calc(var(--preloader-transition-duration) + 1s) ease,
+        max-height var(--preloader-transition-duration) ease,
+        min-height var(--preloader-transition-duration) ease;
+    z-index: 10000;
 }
 
 .dot {
-    width: 20px;
-    height: 20px;
+    /*
+    width: 32px;
+    height: 32px;
+    */
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     background-color: var(--primary);
     animation: scaleDot 1.5s infinite ease-in-out;
@@ -60,6 +75,14 @@ body {
 .preloader.hidden {
     max-height: 0;
     min-height: 0;
+    opacity: 0;
+}
+
+.prelloader.hidden .dot {
+    animation: none;
+    display: none;
+    width: 0;
+    height: 0;
 }
 
 @keyframes scaleDot {
