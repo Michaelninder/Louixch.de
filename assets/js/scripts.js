@@ -306,3 +306,37 @@ Promise.all([
 document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("hashchange", handleHashScroll);
 });
+
+
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const snowContainer = document.querySelector('.snow-container');
+    const numberOfSnowballs = 50;
+
+    for (let i = 0; i < numberOfSnowballs; i++) {
+        const snowball = document.createElement('div');
+        snowball.classList.add('snowball');
+
+        const size = Math.random() * 20 + 10;
+        snowball.style.width = `${size}px`;
+        snowball.style.height = `${size}px`;
+
+        const startPosition = Math.random() * 100;
+        snowball.style.left = `${startPosition}vw`;
+
+        const animationDuration = Math.random() * 5 + 5;
+        snowball.style.animationDuration = `${animationDuration}s`;
+
+        const animationDelay = Math.random() * 5;
+        snowball.style.animationDelay = `${animationDelay}s`;
+
+        const swayDistance = (Math.random() - 0.5) * 200;
+        snowball.style.setProperty('--sway-distance', `${swayDistance}px`);
+
+        snowContainer.appendChild(snowball);
+    }
+});
