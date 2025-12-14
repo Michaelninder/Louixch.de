@@ -880,21 +880,44 @@ section {
     width: 123px;
 }
 
+/*
+#settingsPopover label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    font-weight: 600;
+    cursor: var(--cursor-pointer) 12 12, pointer;
+}
+
+#settingsPopover label span {
+    flex: 1;
+}
+*/
+
+#settingsPopover .setting-item {
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
 #settingsPopover label {
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     font-weight: 600;
+    cursor: var(--cursor-pointer) 12 12, pointer;
 }
 
 input[type="checkbox"] {
-    width: 20px; 
+    width: 20px;
     height: 20px;
-    margin-right: 10px;
     cursor: var(--cursor-pointer) 12 12, pointer;
-    -webkit-appearance: none; 
+    -webkit-appearance: none;
     appearance: none;
-    position: relative; 
-    background-color: transparent; 
+    position: relative;
+    background-color: transparent;
 }
 
 input[type="checkbox"]::before {
@@ -902,12 +925,10 @@ input[type="checkbox"]::before {
     display: inline-block;
     width: 100%;
     height: 100%;
-    
     background-color: var(--card-color);
     border-radius: 4px;
     border: 1px solid #555;
-    
-    vertical-align: middle; 
+    vertical-align: middle;
     transition: all .125s ease-in-out;
 }
 
@@ -925,11 +946,37 @@ input[type="checkbox"]:checked::after {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); 
-    
+    transform: translate(-50%, -50%);
     color: var(--card-color);
     font-size: 14px;
     font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"] {
+    /*width: 80px;*/
+    width: 100%;
+    flex: 0 0 160px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid #555;
+    background-color: var(--card-color);
+    color: var(--text-main);
+    font-size: 0.95rem;
+    transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(0,0,0,0.25);
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 #settingsPopover .close-button {
@@ -958,4 +1005,9 @@ input[type="checkbox"]:checked::after {
 
 .close-button svg path {
     cursor: var(--cursor-pointer) 12 12, pointer;
+}
+
+#saveSettingsBtn {
+    margin-top: 20px;
+    width: 100%; /* already by class-styles */
 }
