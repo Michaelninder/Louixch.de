@@ -837,3 +837,49 @@ section {
 #settingsBtn svg path {
     cursor: var(--cursor-pointer) 12 12, pointer;
 }
+
+#settingsPopover {
+    padding: 20px;
+    border-radius: var(--radius-md);
+    background-color: var(--nav-bg-color);
+    backdrop-filter: blur(5px);
+    border: 1px solid #333;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    width: 300px;
+    color: var(--text-main);
+    position: fixed;
+    /*
+    top: 20vh;
+    right: 30vw;
+    */
+    margin: auto;
+    z-index: 1000;
+}
+
+#settingsPopover .close-button {
+    color: var(--text-main);
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+.close-button {
+    width: 24px;
+    height: 24px;
+    background: none;
+    border: none;
+    cursor: var(--cursor-pointer) 12 12, pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-button svg {
+    width: 20px;
+    height: 20px;
+    cursor: var(--cursor-pointer) 12 12, pointer;
+}
+
+.close-button svg path {
+    cursor: var(--cursor-pointer) 12 12, pointer;
+}
