@@ -845,7 +845,7 @@ section {
     backdrop-filter: blur(5px);
     border: 1px solid #333;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    width: 500px;
+    width: 630px;
     color: var(--text-main);
     position: fixed;
     /*
@@ -953,7 +953,8 @@ input[type="checkbox"]:checked::after {
 }
 
 input[type="text"],
-input[type="number"] {
+input[type="number"],
+select {
     /*width: 80px;*/
     width: 100%;
     flex: 0 0 160px;
@@ -1010,4 +1011,35 @@ input[type="number"]::-webkit-outer-spin-button {
 #saveSettingsBtn {
     margin-top: 20px;
     width: 100%; /* already by class-styles */
+}
+
+#settingsPopover .section-divider {
+    height: 1px;
+    background-color: #333;
+    margin: 20px 0;
+}
+
+#settingsPopover .section-description {
+    color: var(--text-muted);
+    font-size: 0. nine5rem;
+    margin-top: -12px;
+    margin-bottom: 12px;
+}
+
+#settingsPopover .reset-button {
+    background-color: transparent;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+}
+
+#settingsPopover .reset-button:hover {
+    background-color: var(--primary);
+    color: white;
+}
+
+#settingsPopover .apply-settings-warning {
+    margin-top: 10px;
+    color: var(--primary);
+    font-style: italic;
+    font-size: 0.95rem;
 }

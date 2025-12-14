@@ -1,6 +1,7 @@
 const DEFAULT_SETTINGS = {
     skinAutoRotate: false,
-    snowballCount: 64
+    skinAnimation: 'idle',
+    snowballCount: 64,
 };
 
 
@@ -117,21 +118,21 @@ async function loadProjects() {
                         <div class="project-meta">
                             <span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg> ${project.downloads}</span>
                             <span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" /></svg> ${updated}</span>
-                        </div>
-                    </div>
-                </div>
-            `;
-            container.innerHTML += html;
-        });
+                            </div>
+                            </div>
+                            </div>
+                            `;
+                            container.innerHTML += html;
+                        });
+                        
+                    } catch (e) {
+                        container.innerHTML = '<div class="card error-msg">Projekte konnten nicht geladen werden.</div>';
+                    }
+                }
+                
 
-    } catch (e) {
-        container.innerHTML = '<div class="card error-msg">Projekte konnten nicht geladen werden.</div>';
-    }
-}
 
-
-
-function getBoolFromStorage(key, fallback) {
+                function getBoolFromStorage(key, fallback) {
     const value = localStorage.getItem(key);
     if (value === null) return fallback;
     return value === "true";
@@ -146,6 +147,17 @@ function getNumberFromStorage(key, fallback, min, max) {
 }
 
 
+const skinViewerAnimations = {
+    idle: skinview3d.IdleAnimation,
+    walking: skinview3d.WalkingAnimation,
+    wave: skinview3d.WaveAnimation,
+    flying: skinview3d.FlyingAnimation,
+    running: skinview3d.RunningAnimation,
+};
+
+function getSkinViewerAnimationByName(name) {
+    return skinViewerAnimations[name] || skinview3d.IdleAnimation;
+}
 
 
 async function initSkinGallery() {
@@ -204,7 +216,15 @@ async function initSkinGallery() {
         mainCanvasContainer.appendChild(skinViewer.canvas);
 
         //skinViewer.animation = new skinview3d.WalkingAnimation();
-        skinViewer.animation = new skinview3d.IdleAnimation();
+        //skinViewer.animation = new skinview3d.IdleAnimation();
+        //skinViewer.animation = new skinview3d.WaveAnimation();
+        //skinViewer.animation = new skinview3d.FlyingAnimation();
+        //skinViewer.animation = new skinview3d.RunningAnimation();
+
+        const storedAnimationName = localStorage.getItem("skinAnimation") || "idle";
+        const animationClass = getSkinViewerAnimationByName(storedAnimationName);
+        skinViewer.animation = new animationClass();
+
         skinViewer.autoRotate = localStorage.getItem("skinAutoRotate") === "true" ? true : false;
         //skinViewer.controls.enableRotate = false;
         skinViewer.controls.enableZoom = false;
@@ -219,6 +239,7 @@ async function initSkinGallery() {
 
     } catch (e) {
         mainCanvasContainer.innerHTML = '<p class="error-msg">Viewer Error</p>';
+        console.error("SkinViewer initialization error:", e);
     }
 
     const getHeadUrl = (skinUrl) => {
@@ -400,28 +421,30 @@ document.addEventListener("DOMContentLoaded", () => {
     const toggleSkinAutoRotate = document.getElementById("toggleSkinAutoRotate");
     const snowballCountInput = document.getElementById("snowballCount");
     const saveSettingsBtn = document.getElementById("saveSettingsBtn");
+    const skinAnimationSelect = document.getElementById("skinAnimation");
 
-    if (!toggleSkinAutoRotate || !snowballCountInput || !saveSettingsBtn) {
+    if (!toggleSkinAutoRotate || !snowballCountInput || !saveSettingsBtn || !skinAnimationSelect) {
         console.warn("Settings elements missing in DOM");
         return;
     }
 
-    toggleSkinAutoRotate.checked = getBoolFromStorage(
-        "skinAutoRotate",
-        DEFAULT_SETTINGS.skinAutoRotate
-    );
-
-    snowballCountInput.value = getNumberFromStorage(
-        "snowballCount",
-        DEFAULT_SETTINGS.snowballCount,
-        0,
-        256
-    );
+    toggleSkinAutoRotate.checked = getBoolFromStorage("skinAutoRotate", DEFAULT_SETTINGS.skinAutoRotate);
+    snowballCountInput.value = getNumberFromStorage("snowballCount", DEFAULT_SETTINGS.snowballCount, 0, 256);
+    skinAnimationSelect.value = localStorage.getItem("skinAnimation") || DEFAULT_SETTINGS.skinAnimation;
 
     saveSettingsBtn.addEventListener("click", () => {
         localStorage.setItem("skinAutoRotate", toggleSkinAutoRotate.checked);
+        localStorage.setItem("skinAnimation", skinAnimationSelect.value);
         localStorage.setItem("snowballCount", snowballCountInput.value);
 
         location.reload();
     });
 });
+
+
+/*
+function applySkinViewerAnimation(skinViewer, animationName) {
+    const AnimationClass = getSkinViewerAnimationByName(animationName);
+    skinViewer.animation = new AnimationClass();
+}
+*/
