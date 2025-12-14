@@ -1,3 +1,11 @@
+const DEFAULT_SETTINGS = {
+    skinAutoRotate: false,
+    snowballCount: 64
+};
+
+
+
+
 const scrollBtn = document.getElementById("scrollTopBtn");
 const body = document.body;
 const nav = document.querySelector("nav");
@@ -120,6 +128,25 @@ async function loadProjects() {
         container.innerHTML = '<div class="card error-msg">Projekte konnten nicht geladen werden.</div>';
     }
 }
+
+
+
+function getBoolFromStorage(key, fallback) {
+    const value = localStorage.getItem(key);
+    if (value === null) return fallback;
+    return value === "true";
+}
+
+function getNumberFromStorage(key, fallback, min, max) {
+    const value = Number(localStorage.getItem(key));
+    if (Number.isNaN(value)) return fallback;
+    if (min !== undefined && value < min) return min;
+    if (max !== undefined && value > max) return max;
+    return value;
+}
+
+
+
 
 async function initSkinGallery() {
     //const skinListContainer = document.getElementById('skin-list');
@@ -344,4 +371,57 @@ document.addEventListener('DOMContentLoaded', () => {
 
         snowContainer.appendChild(snowball);
     }
+});
+/*
+
+const settingsBtn = document.getElementById('settingsBtn');
+const saveSettingsBtn = document.getElementById('saveSettingsBtn');
+
+/*
+settingsBtn.addEventListener('click', () => {
+    const popover = document.getElementById('settingsPopover');
+    if (popover) {
+        popover.toggle();
+    }
+});
+*//*
+
+saveSettingsBtn.addEventListener('click', () => {
+    const skinAutoRotate = document.getElementById('toggleSkinAutoRotate').checked;
+    const snowballCount = document.getElementById('snowballCount').value;
+
+    localStorage.setItem("skinAutoRotate", skinAutoRotate);
+    localStorage.setItem("snowballCount", snowballCount);
+
+    location.reload();
+});*/
+
+document.addEventListener("DOMContentLoaded", () => {
+    const toggleSkinAutoRotate = document.getElementById("toggleSkinAutoRotate");
+    const snowballCountInput = document.getElementById("snowballCount");
+    const saveSettingsBtn = document.getElementById("saveSettingsBtn");
+
+    if (!toggleSkinAutoRotate || !snowballCountInput || !saveSettingsBtn) {
+        console.warn("Settings elements missing in DOM");
+        return;
+    }
+
+    toggleSkinAutoRotate.checked = getBoolFromStorage(
+        "skinAutoRotate",
+        DEFAULT_SETTINGS.skinAutoRotate
+    );
+
+    snowballCountInput.value = getNumberFromStorage(
+        "snowballCount",
+        DEFAULT_SETTINGS.snowballCount,
+        0,
+        256
+    );
+
+    saveSettingsBtn.addEventListener("click", () => {
+        localStorage.setItem("skinAutoRotate", toggleSkinAutoRotate.checked);
+        localStorage.setItem("snowballCount", snowballCountInput.value);
+
+        location.reload();
+    });
 });
