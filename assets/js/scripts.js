@@ -1,5 +1,6 @@
 const DEFAULT_SETTINGS = {
     skinAutoRotate: false,
+    skinRotationSpped: 0.035,
     skinAnimation: 'idle',
     snowballCount: 64,
 };
@@ -230,7 +231,8 @@ async function initSkinGallery() {
         skinViewer.autoRotate = localStorage.getItem("skinAutoRotate") === "true" ? true : false;
         //skinViewer.controls.enableRotate = false;
         skinViewer.controls.enableZoom = false;
-        skinViewer.autoRotateSpeed = 0.035;
+        //skinViewer.autoRotateSpeed = localStorage.getItem("skinRotaionSpeed") || 0.1;
+        skinViewer.autoRotateSpeed = getNumberFromStorage("skinRotationSpeed", 0.1)
         skinViewer.zoom = 0.8;
         //skinViewer.nameTag = "Louixch";
         //skinViewer.nameTag = new skinview3d.NameTagObject("Louixch", { textStyle: "#ef4444" }); // NOT WANTED
@@ -424,23 +426,41 @@ document.addEventListener("DOMContentLoaded", () => {
     const snowballCountInput = document.getElementById("snowballCount");
     const saveSettingsBtn = document.getElementById("saveSettingsBtn");
     const skinAnimationSelect = document.getElementById("skinAnimation");
+    const skinRotationSpped = document.getElementById("skinRotationSpeed")
 
-    if (!toggleSkinAutoRotate || !snowballCountInput || !saveSettingsBtn || !skinAnimationSelect) {
+    if (!toggleSkinAutoRotate || !snowballCountInput || !saveSettingsBtn || !skinAnimationSelect || !skinRotationSpped) {
         console.warn("Settings elements missing in DOM");
         return;
     }
 
     toggleSkinAutoRotate.checked = getBoolFromStorage("skinAutoRotate", DEFAULT_SETTINGS.skinAutoRotate);
+    skinRotationSpped.value = getNumberFromStorage("skinRotationSpeed", DEFAULT_SETTINGS.skinRotationSpped);
     snowballCountInput.value = getNumberFromStorage("snowballCount", DEFAULT_SETTINGS.snowballCount, 0, 256);
     skinAnimationSelect.value = localStorage.getItem("skinAnimation") || DEFAULT_SETTINGS.skinAnimation;
 
     saveSettingsBtn.addEventListener("click", () => {
         localStorage.setItem("skinAutoRotate", toggleSkinAutoRotate.checked);
+        localStorage.setItem("skinRotationSpeed", skinRotationSpped.value);
         localStorage.setItem("skinAnimation", skinAnimationSelect.value);
-        localStorage.setItem("snowballCount", snowballCountInput.value);
+        localStorage.setItem("nowballCount", snowballCountInput.value);
 
         location.reload();
     });
+/*
+    toggleSkinAutoRotate.checked = getBoolFromStorage("SETTING_skinAutoRotate", DEFAULT_SETTINGS.skinAutoRotate);
+    skinRotationSpped.value = getNumberFromStorage("SETTING_skinRotationSpeed", DEFAULT_SETTINGS.skinRotationSpped);
+    snowballCountInput.value = getNumberFromStorage("SETTING_snowballCount", DEFAULT_SETTINGS.snowballCount, 0, 256);
+    skinAnimationSelect.value = localStorage.getItem("SETTING_skinAnimation") || DEFAULT_SETTINGS.skinAnimation;
+
+    saveSettingsBtn.addEventListener("click", () => {
+        localStorage.setItem("SETTING_skinAutoRotate", toggleSkinAutoRotate.checked);
+        localStorage.setItem("SETTING_skinRotationSpeed", skinRotationSpped.value);
+        localStorage.setItem("SETTING_skinAnimation", skinAnimationSelect.value);
+        localStorage.setItem("SETTING_nowballCount", snowballCountInput.value);
+
+        location.reload();
+    });
+*/
 });
 
 
