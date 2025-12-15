@@ -51,7 +51,7 @@ body {
 
 body:not(.loaded) > *:not(.preloader),
 body:not(.loaded) #settingsBtn,
-body:not(.loaded) #scrollToTopBtn {
+body:not(.loaded) #scrollTopBtn {
   display: none !important;
 }
 
@@ -791,7 +791,7 @@ section {
 
 /*
 body:not(.loaded) #settingsBtn,
-body:not(.loaded) #scrollToTopBtn {
+body:not(.loaded) #scrollTopBtn {
     display: none;
 }
 */
@@ -815,6 +815,20 @@ body:not(.loaded) #scrollToTopBtn {
     width: 50px;
     height: 50px;
     cursor: var(--cursor-pointer) 12 12, pointer;
+}
+
+@media (max-width: 500px) {
+    #settingsBtn {
+        top: 0;
+        right: 0;
+        border-radius: 0px 0px 0px 50%;
+    }
+
+    #scrollTopBtn {
+        bottom: 0;
+        right: 0;
+        border-radius: 50% 0px 0px 0px;
+    }
 }
 
 #settingsBtn:hover svg {
@@ -852,7 +866,7 @@ body:not(.loaded) #scrollToTopBtn {
     */
     margin: auto;
     z-index: 1000;
-    max-width: 90vw;
+    max-width: 93vw;
     max-height: 80vh;
     overflow-y: auto;
 
