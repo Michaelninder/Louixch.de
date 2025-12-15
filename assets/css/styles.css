@@ -829,6 +829,10 @@ body:not(.loaded) #scrollTopBtn {
         right: 0;
         border-radius: 50% 0px 0px 0px;
     }
+
+    button.settings-toggle {
+        display: none;
+    }
 }
 
 #settingsBtn:hover svg {
