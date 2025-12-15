@@ -49,8 +49,10 @@ body {
 }
 
 
-body:not(.loaded) > *:not(.preloader) {
-  display: none;
+body:not(.loaded) > *:not(.preloader),
+body:not(.loaded) #settingsBtn,
+body:not(.loaded) #scrollToTopBtn {
+  display: none !important;
 }
 
 .preloader {
@@ -273,7 +275,7 @@ h1 span {
     width: fit-content;
 }
 
-.btn:hover {^
+.btn:hover {
     background-color: var(--primary-hover);
 }
 
@@ -787,6 +789,12 @@ section {
     }
 }
 
+/*
+body:not(.loaded) #settingsBtn,
+body:not(.loaded) #scrollToTopBtn {
+    display: none;
+}
+*/
 
 #settingsBtn {
     position: fixed;
