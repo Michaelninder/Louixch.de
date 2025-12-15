@@ -840,7 +840,7 @@ body:not(.loaded) #scrollToTopBtn {
     padding: 20px;
     border-radius: var(--radius-md);
     background-color: var(--nav-bg-color);
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(7px);
     border: 1px solid var(--border-color);
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     width: 630px;
@@ -855,6 +855,8 @@ body:not(.loaded) #scrollToTopBtn {
     max-width: 90vw;
     max-height: 80vh;
     overflow-y: auto;
+
+    border: none;
 }
 
 #settingsPopover h2 {
@@ -988,14 +990,28 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .close-button {
-    width: 24px;
-    height: 24px;
+    width: 28px;
+    height: 28px;
     background: none;
     border: none;
     cursor: var(--cursor-pointer) 12 12, pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.close-button svg {
+    transition-duration: .2s;
+}
+
+.close-button:hover svg {
+    color: var(--primary);
+    scale: 1.2;
+}
+
+.close-button:active svg {
+    color: var(--primary-hover);
+    scale: 1.25;
 }
 
 .close-button svg {
@@ -1064,6 +1080,13 @@ button.settings-toggle {
 button.settings-toggle:hover {
     background-color: var(--card-hover-color);
     color: var(--text-main)
+}
+button.settings-toggle svg {
+    transition-duration: .125s;
+}
+
+button.settings-toggle:hover svg {
+    rotate: 20deg;
 }
 
 button.settings-toggle:active {
