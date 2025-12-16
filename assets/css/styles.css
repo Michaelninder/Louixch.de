@@ -442,7 +442,6 @@ footer a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition-duration: .3s;
 }
 
 #scrollTopBtn:hover {
