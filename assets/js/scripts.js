@@ -93,11 +93,7 @@ async function loadProjects() {
 
         const projects = await response.json();
 
-        if (projects.length === 0) {
-            container.innerHTML =
-                '<div class="card">Keine öffentlichen Projekte gefunden.</div>';
-            return;
-        }
+        if (projects.length === 0) { container.innerHTML = '<div class="card">Keine öffentlichen Projekte gefunden.</div>'; return; }
 
         container.innerHTML = "";
 
@@ -116,13 +112,9 @@ async function loadProjects() {
                     </div>
                     <p class="card-content" style="font-size: 0.9rem; margin-bottom: 15px;">${description}</p>
                     <div style="margin-top:auto;">
-                        <a href="https://modrinth.com/project/${
-                            project.slug
-                        }" target="_blank" class="btn btn-full" style="font-size: 0.9rem; padding: 8px;">Ansehen</a>
+                        <a href="https://modrinth.com/project/${project.slug}" target="_blank" class="btn btn-full" style="font-size: 0.9rem; padding: 8px;">Ansehen</a>
                         <div class="project-meta">
-                            <span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg> ${
-                                project.downloads
-                            }</span>
+                            <span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg> ${project.downloads}</span>
                             <span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" /></svg> ${updated}</span>
                             </div>
                             </div>
@@ -130,10 +122,7 @@ async function loadProjects() {
                             `;
             container.innerHTML += html;
         });
-    } catch (e) {
-        container.innerHTML =
-            '<div class="card error-msg">Projekte konnten nicht geladen werden.</div>';
-    }
+    } catch (e) {container.innerHTML ='<div class="card error-msg">Projekte konnten nicht geladen werden.</div>';}
 }
 
 function getBoolFromStorage(key, fallback) {
@@ -166,8 +155,7 @@ let currentSkinViewer;
 
 async function initSkinGallery() {
     //const skinListContainer = document.getElementById('skin-list');
-    const skinListContainer =
-        document.getElementsByClassName("skin-list-grid-inner")[0];
+    const skinListContainer = document.getElementsByClassName("skin-list-grid-inner")[0];
     const mainCanvasContainer = document.getElementById("skin-container-main");
     const nameDisplay = document.getElementById("current-skin-name");
     const downloadBtn = document.getElementById("current-skin-download");
@@ -227,29 +215,20 @@ async function initSkinGallery() {
         //currentSkinViewer.animation = new skinview3d.FlyingAnimation();
         //currentSkinViewer.animation = new skinview3d.RunningAnimation();
 
-        const storedAnimationName =
-            localStorage.getItem("skinAnimation") || DEFAULT_SETTINGS.skinAnimation;
+        const storedAnimationName = localStorage.getItem("skinAnimation") || DEFAULT_SETTINGS.skinAnimation;
         const animationClass = getSkinViewerAnimationByName(storedAnimationName);
         currentSkinViewer.animation = new animationClass();
 
-        currentSkinViewer.autoRotate = getBoolFromStorage(
-            "skinAutoRotate",
-            DEFAULT_SETTINGS.skinAutoRotate
-        );
+        currentSkinViewer.autoRotate = getBoolFromStorage("skinAutoRotate", DEFAULT_SETTINGS.skinAutoRotate);
         //currentSkinViewer.controls.enableRotate = false;
         currentSkinViewer.controls.enableZoom = false;
         //currentSkinViewer.autoRotateSpeed = localStorage.getItem("skinRotaionSpeed") || 0.1;
-        currentSkinViewer.autoRotateSpeed = getNumberFromStorage(
-            "skinRotationSpeed",
-            DEFAULT_SETTINGS.skinRotationSpped
-        );
+        currentSkinViewer.autoRotateSpeed = getNumberFromStorage("skinRotationSpeed", DEFAULT_SETTINGS.skinRotationSpped);
         currentSkinViewer.zoom = 0.8;
         //currentSkinViewer.nameTag = "Louixch";
         //currentSkinViewer.nameTag = new skinview3d.NameTagObject("Louixch", { textStyle: "#ef4444" }); // NOT WANTED
 
-        if (typeof skinview3d.createOrbitControls === "function") {
-            skinview3d.createOrbitControls(currentSkinViewer);
-        }
+        if (typeof skinview3d.createOrbitControls === "function") { skinview3d.createOrbitControls(currentSkinViewer); }
     } catch (e) {
         mainCanvasContainer.innerHTML = '<p class="error-msg">Viewer Error</p>';
         console.error("SkinViewer initialization error:", e);
@@ -293,9 +272,7 @@ async function initSkinGallery() {
         downloadBtn.href = fullPath;
         downloadBtn.download = fileName;
 
-        document
-            .querySelectorAll(".skin-bust-card")
-            .forEach((c) => c.classList.remove("active"));
+        document.querySelectorAll(".skin-bust-card").forEach((c) => c.classList.remove("active"));
         if (cardElement) cardElement.classList.add("active");
     };
 
@@ -333,8 +310,7 @@ const handleHashScroll = () => {
 
         if (targetElement) {
             const offset = scrollOffsetMap[hash] || 0;
-            const elementPosition =
-                targetElement.getBoundingClientRect().top + window.scrollY;
+            const elementPosition = targetElement.getBoundingClientRect().top + window.scrollY;
             const offsetPosition = elementPosition - offset;
 
             window.scrollTo({
@@ -380,8 +356,7 @@ function getRandomArbitrary(min, max) {
 
 document.addEventListener("DOMContentLoaded", () => {
     const snowContainer = document.querySelector(".snow-container");
-    const numberOfSnowballs =
-        localStorage.getItem("snowballCount") || getRandomArbitrary(30, 60);
+    const numberOfSnowballs = localStorage.getItem("snowballCount") || getRandomArbitrary(30, 60);
 
     for (let i = 0; i < numberOfSnowballs; i++) {
         const snowball = document.createElement("div");
@@ -458,22 +433,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const getStoredSettings = () => ({
         skinAutoRotate: getBoolFromStorage("skinAutoRotate", DEFAULT_SETTINGS.skinAutoRotate),
-        skinRotationSpeed: getNumberFromStorage(
-            "skinRotationSpeed",
-            DEFAULT_SETTINGS.skinRotationSpped
-        ),
-        skinAnimation:
-            localStorage.getItem("skinAnimation") || DEFAULT_SETTINGS.skinAnimation,
-        snowballCount: getNumberFromStorage(
-            "snowballCount",
-            DEFAULT_SETTINGS.snowballCount,
-            0,
-            256
-        ),
-        instantApplySettings: getBoolFromStorage(
-            "instantApplySettings",
-            DEFAULT_SETTINGS.instantApplySettings
-        ),
+        skinRotationSpeed: getNumberFromStorage("skinRotationSpeed", DEFAULT_SETTINGS.skinRotationSpped),
+        skinAnimation: localStorage.getItem("skinAnimation") || DEFAULT_SETTINGS.skinAnimation,
+        snowballCount: getNumberFromStorage("snowballCount", DEFAULT_SETTINGS.snowballCount, 0, 256),
+        instantApplySettings: getBoolFromStorage("instantApplySettings", DEFAULT_SETTINGS.instantApplySettings),
     });
 
     const applySettingsToForm = () => {
@@ -542,10 +505,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    toggleSkinAutoRotate.addEventListener("change", () => { if (instantApplySettingsCheckbox.checked) applyInstantSettings(); });
-    skinRotationSppedInput.addEventListener("input", () => { if (instantApplySettingsCheckbox.checked) applyInstantSettings(); });
-    skinAnimationSelect.addEventListener("change", () => { if (instantApplySettingsCheckbox.checked) applyInstantSettings(); });
-    snowballCountInput.addEventListener("input", () => { if (instantApplySettingsCheckbox.checked) applyInstantSettings(); });
+    toggleSkinAutoRotate.addEventListener("change", () => { if (getBoolFromStorage("instantApplySettings", DEFAULT_SETTINGS.instantApplySettings)) applyInstantSettings(); });
+    skinRotationSppedInput.addEventListener("input", () => { if (getBoolFromStorage("instantApplySettings", DEFAULT_SETTINGS.instantApplySettings)) applyInstantSettings(); });
+    skinAnimationSelect.addEventListener("change", () => { if (getBoolFromStorage("instantApplySettings", DEFAULT_SETTINGS.instantApplySettings)) applyInstantSettings(); });
+    snowballCountInput.addEventListener("input", () => { if (getBoolFromStorage("instantApplySettings", DEFAULT_SETTINGS.instantApplySettings)) applyInstantSettings(); });
 
     saveSettingsBtn.addEventListener("click", () => {
         const formSettings = getFormSettings();
