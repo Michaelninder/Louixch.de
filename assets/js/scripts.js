@@ -378,6 +378,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const swayDistance = (Math.random() - 0.5) * 200;
         snowball.style.setProperty("--sway-distance", `${swayDistance}px`);
 
+        const opacity = Math.random();
+        //snowball.style.opacity = opacity;
+        snowball.style.setProperty("--max-opacity", opacity);
+
         snowContainer.appendChild(snowball);
     }
 });
@@ -485,7 +489,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 snowball.classList.add("snowball");
 
                 const size = Math.random() * 20 + 10;
-                snowball.style.width = `${size}px`;
+                snowball.style.width = `${size-4}px`;
                 snowball.style.height = `${size}px`;
 
                 const startPosition = Math.random() * 100;
@@ -499,6 +503,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const swayDistance = (Math.random() - 0.5) * 200;
                 snowball.style.setProperty("--sway-distance", `${swayDistance}px`);
+
+                const opacity = Math.random();
+                snowball.style.setProperty("--max-opacity", opacity);
 
                 snowContainer.appendChild(snowball);
             }
@@ -555,3 +562,59 @@ function applySkinViewerAnimation(skinViewer, animationName) {
     skinViewer.animation = new AnimationClass();
 }
 */
+
+/*
+function count_up(item, end_amount, start_amount = 0) {
+    if (end_amount <= start_amount) { return }
+
+    let current_amount = start_amount;
+
+    const interval = setInterval(() => {
+        item.innerHTML = current_amount;
+        if (end_amount === current_amount) { clearInterval(interval) }
+        current_amount++;
+    }, 50);
+}
+*/
+
+function count_up(item, end_amount, start_amount = 0, interval_time = 50) {
+  if (end_amount <= start_amount) {
+    return;
+  }
+
+  let current_amount = start_amount;
+
+  const interval = setInterval(() => {
+    item.innerHTML = current_amount;
+    if (end_amount === current_amount) {
+      clearInterval(interval);
+    }
+    current_amount++;
+  }, interval_time);
+}
+
+function setupIntersectionObserver() {
+  const hoursWastedElement = document.getElementById("hoursWasted");
+
+  if (hoursWastedElement) {
+    const endAmount = parseInt(hoursWastedElement.dataset.value, 10);
+    const observerOptions = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 1.0,
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          count_up(entry.target, endAmount, 0, 543);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    observer.observe(hoursWastedElement);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", setupIntersectionObserver);
