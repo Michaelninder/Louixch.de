@@ -28,6 +28,39 @@ scrollBtn.addEventListener("click", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
+function initialiseSnowballs(numberOfSnowballs = DEFAULT_SETTINGS.snowballCount) {
+    const snowContainer = document.querySelector(".snow-container");
+
+    //while (snowContainer.firstChild) { snowContainer.removeChild(snowContainer.firstChild); }
+
+    for (let i = 0; i < numberOfSnowballs; i++) {
+        const snowball = document.createElement("div");
+        snowball.classList.add("snowball");
+
+        const size = Math.random() * 20 + 10;
+        snowball.style.width = `${size}px`;
+        snowball.style.height = `${size}px`;
+
+        const startPosition = Math.random() * 100;
+        snowball.style.left = `${startPosition}vw`;
+
+        const animationDuration = Math.random() * 5 + 5;
+        snowball.style.animationDuration = `${animationDuration}s`;
+
+        const animationDelay = Math.random() * 5;
+        snowball.style.animationDelay = `${animationDelay}s`;
+
+        const swayDistance = (Math.random() - 0.5) * 200;
+        snowball.style.setProperty("--sway-distance", `${swayDistance}px`);
+
+        const opacity = Math.random();
+        //snowball.style.opacity = opacity;
+        snowball.style.setProperty("--max-opacity", opacity);
+
+        snowContainer.appendChild(snowball);
+    }
+}
+
 document.getElementById("skinImage").src = "https://visage.surgeplay.com/full/512/Louixch";
 
 document.getElementById("year").textContent = new Date().getFullYear();
@@ -358,6 +391,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const snowContainer = document.querySelector(".snow-container");
     const numberOfSnowballs = localStorage.getItem("snowballCount") || getRandomArbitrary(30, 60);
 
+    initialiseSnowballs(numberOfSnowballs);
+    /*
     for (let i = 0; i < numberOfSnowballs; i++) {
         const snowball = document.createElement("div");
         snowball.classList.add("snowball");
@@ -383,7 +418,7 @@ document.addEventListener("DOMContentLoaded", () => {
         snowball.style.setProperty("--max-opacity", opacity);
 
         snowContainer.appendChild(snowball);
-    }
+    }*/
 });
 /*
 const settingsBtn = document.getElementById('settingsBtn');
@@ -484,6 +519,8 @@ document.addEventListener("DOMContentLoaded", () => {
             while (snowContainer.firstChild) {
                 snowContainer.removeChild(snowContainer.firstChild);
             }
+            initialiseSnowballs(settings.snowballCount);
+            /*
             for (let i = 0; i < settings.snowballCount; i++) {
                 const snowball = document.createElement("div");
                 snowball.classList.add("snowball");
@@ -509,6 +546,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 snowContainer.appendChild(snowball);
             }
+            */
         }
     };
 

@@ -767,7 +767,8 @@ section {
     background-image: url('../../assets/minecraft-items/snowball.png');
     background-size: contain;
     background-repeat: no-repeat;
-    animation: snowfall linear infinite;
+    /*animation: snowfall linear infinite;*/
+    animation: snowfall ease-in infinite; 
     opacity: 0;
 }
 
@@ -775,6 +776,7 @@ section {
     0% {
         transform: translateY(-10vh) translateX(0);
         opacity: 0;
+        /*scale: 0.2;*/
     }
     10% {
         opacity: var(--max-opacity);
@@ -785,6 +787,7 @@ section {
     100% {
         transform: translateY(100vh) translateX(var(--sway-distance, 0));
         opacity: 0;
+        /*scale: 3;*/
     }
 }
 
