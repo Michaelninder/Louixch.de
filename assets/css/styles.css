@@ -1163,3 +1163,66 @@ button.settings-toggle svg,
 button.settings-toggle svg path {
     cursor: var(--cursor-pointer) 12 12, pointer;
 }
+
+
+#hoursWasted {
+    display: block;
+    margin-inline: clamp(1rem, 5vw, 3rem);
+    padding: clamp(0.5rem, 2vw, 1rem) clamp(1rem, 4vw, 2rem);
+    background-color: var(--card-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+    color: var(--text-main);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+
+
+#socials {
+    background: var(--card-color);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.socials-container {
+    display: flex;
+    gap: 12px;
+    flex-direction: row;
+    padding: 12px 24px;
+}
+
+.socials-item {
+    --item-size: 40px;
+    --item-padding: 4px;
+    background: var(--primary);
+    border-radius: 50%;
+    width: calc(var(--item-size) + 2 * var(--item-padding)); height: calc(var(--item-size) + 2 * var(--item-padding));
+    padding: var(--item-padding);
+    /*width: 48px;
+    height: 48px;
+    padding: 4px;*/
+    transition: all .25s ease-in-out;
+}
+
+.socials-item:hover {
+    background: var(--primary-hover);
+}    
+
+.socials-item img {
+    /*width: 40px;
+    height: 40px;*/
+    width: var(--item-size); height: var(--item-size);
+    filter: invert(90%);
+    cursor: var(--cursor-pointer) 12 12, pointer;
+    /*transition-duration: .2s;*/
+    transition: all .25s ease-in-out;
+}
+
+.socials-item:hover img {
+    transform: rotate(-16deg);
+}
+
+.section-title {
+    
+}

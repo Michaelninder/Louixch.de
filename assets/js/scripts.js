@@ -216,6 +216,8 @@ async function initSkinGallery() {
 
         //"_dev.png",
 
+
+        /*
         "placeholder.png",
         "placeholder.png",
         "placeholder.png",
@@ -229,6 +231,7 @@ async function initSkinGallery() {
         "placeholder.png",
         "placeholder.png",
         "placeholder.png",
+        */
     ];
     const basePath = "assets/minecraft-skins/";
 
