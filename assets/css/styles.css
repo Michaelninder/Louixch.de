@@ -1183,13 +1183,14 @@ button.settings-toggle svg path {
     background: var(--card-color);
     border-radius: 12px;
     border: 1px solid var(--border-color);
+    padding: 24px;
 }
 
 .socials-container {
     display: flex;
     gap: 12px;
     flex-direction: row;
-    padding: 12px 24px;
+    margin-top: 16px;
 }
 
 .socials-item {
@@ -1197,32 +1198,44 @@ button.settings-toggle svg path {
     --item-padding: 4px;
     background: var(--primary);
     border-radius: 50%;
-    width: calc(var(--item-size) + 2 * var(--item-padding)); height: calc(var(--item-size) + 2 * var(--item-padding));
+    width: calc(var(--item-size) + 2 * var(--item-padding));
+    height: calc(var(--item-size) + 2 * var(--item-padding));
     padding: var(--item-padding);
     /*width: 48px;
     height: 48px;
     padding: 4px;*/
     transition: all .25s ease-in-out;
+    /*display: flex;*/
+    justify-content: center;
+    align-items: center;
 }
 
 .socials-item:hover {
     background: var(--primary-hover);
-}    
+    box-shadow: 0 0 10px var(--primary-transparent);
+    transform: translateY(-2px);
+}
 
 .socials-item img {
     /*width: 40px;
     height: 40px;*/
-    width: var(--item-size); height: var(--item-size);
-    filter: invert(90%);
+    width: var(--item-size);
+    height: var(--item-size);
+    filter: invert(92%);
     cursor: var(--cursor-pointer) 12 12, pointer;
     /*transition-duration: .2s;*/
     transition: all .25s ease-in-out;
+    scale: .85;
 }
 
 .socials-item:hover img {
-    transform: rotate(-16deg);
+    transform: rotate(-9deg);
+    scale: .95;
+    filter: invert(100%);
 }
 
 .section-title {
-    
+    font-size: 1.5em;
+    font-weight: bold;
+    color: var(--text-color);
 }
