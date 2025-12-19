@@ -1010,6 +1010,8 @@ input[type='range'] {
     height: 7px;
     border-radius: 3px;
     transition-duration: .23456789s;
+    /*min-width: 200px;*/
+    width: 11vw;
 }
 
 input[type="range"]:active {
@@ -1021,8 +1023,8 @@ input[type="range"]:active {
 input[type='range']::-webkit-slider-thumb {
     -webkit-appearance: none !important;
     background: var(--primary);
-    height: 14px;
-    width: 5px;
+    height: 24px;
+    width: 7px;
     border-radius: 3px;
 }
 
