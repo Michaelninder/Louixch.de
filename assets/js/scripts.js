@@ -207,6 +207,8 @@ async function initSkinGallery() {
         "2025-Red-Suit-Rose.png",
         "2025-Schaf.png",
         "2025-Soviet.png",
+        "2025-Vintage.png",
+        "2025-Gepaecktraeger-Zug.png",
 
         //"2024-Skin9.png",
         //"2024-Skin11.png",
