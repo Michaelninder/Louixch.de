@@ -61,7 +61,7 @@ function initialiseSnowballs(numberOfSnowballs = DEFAULT_SETTINGS.snowballCount)
     }
 }
 
-document.getElementById("skinImage").src = "https://visage.surgeplay.com/full/512/Louixch";
+document.getElementById("skinImage").src = "https://vzge.me/full/512/Louixch";
 
 document.getElementById("year").textContent = new Date().getFullYear();
 
