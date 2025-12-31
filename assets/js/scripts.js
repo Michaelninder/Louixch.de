@@ -662,6 +662,7 @@ function setupIntersectionObserver() {
 
 document.addEventListener("DOMContentLoaded", setupIntersectionObserver);
 
+
 function launchFireworks() {
     const container = document.querySelector(".firework-container");
     if (!container) return;
@@ -701,6 +702,7 @@ function wishHappyNewYear() {
     };
 
     window.alert(celebration.message);
+    
     localStorage.setItem(storageKey, "true");
 
     setTimeout(launchFireworks, 2000);
