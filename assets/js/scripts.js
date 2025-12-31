@@ -688,24 +688,28 @@ function launchFireworks() {
 }
 
 function wishHappyNewYear() {
-    const currentYear = new Date().getFullYear();
+    const date = new Date();
+    const currentYear = date.getFullYear();
+    const currentMonth = date.getMonth();
     const storageKey = `newYearWish-${currentYear}`;
 
     if (localStorage.getItem(storageKey)) {
         return;
     }
 
-    const celebration = {
-        message: "Frohes neues Jahr " + currentYear + "!",
-        fireworks: true,
-        launchedAt: new Date().toISOString(),
-    };
+    //console.log(currentMonth);
+    //console.log(date);
 
-    window.alert(celebration.message);
+    if (currentMonth === 0) {
+        const celebration_message = "Frohes neues Jahr " + currentYear + "!";
     
-    localStorage.setItem(storageKey, "true");
+        window.alert(celebration_message);
+        
+        localStorage.setItem(storageKey, "true");
+    
+        setTimeout(launchFireworks, 2000);
+    }
 
-    setTimeout(launchFireworks, 2000);
 }
 
 document.addEventListener("DOMContentLoaded", wishHappyNewYear);
