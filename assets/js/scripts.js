@@ -662,6 +662,30 @@ function setupIntersectionObserver() {
 
 document.addEventListener("DOMContentLoaded", setupIntersectionObserver);
 
+function launchFireworks() {
+    const container = document.querySelector(".firework-container");
+    if (!container) return;
+
+    for (let i = 0; i < 25; i++) {
+        const rocket = document.createElement("div");
+        rocket.className = "rocket";
+
+        const leftPosition = Math.random() * 95;
+        const duration = 1.5 + Math.random() * 2;
+        const delay = Math.random() * 3;
+
+        rocket.style.left = `${leftPosition}%`;
+        rocket.style.animationDuration = `${duration}s`;
+        rocket.style.animationDelay = `${delay}s`;
+
+        container.appendChild(rocket);
+
+        rocket.addEventListener("animationend", () => {
+        rocket.remove();
+        });
+    }
+}
+
 function wishHappyNewYear() {
     const currentYear = new Date().getFullYear();
     const storageKey = `newYearWish-${currentYear}`;
@@ -676,10 +700,10 @@ function wishHappyNewYear() {
         launchedAt: new Date().toISOString(),
     };
 
-    //console.log(celebration.message);
-    window.alert(celebration.message)
-    
+    window.alert(celebration.message);
     localStorage.setItem(storageKey, "true");
+
+    setTimeout(launchFireworks, 2000);
 }
 
 document.addEventListener("DOMContentLoaded", wishHappyNewYear);
