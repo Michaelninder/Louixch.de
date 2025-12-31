@@ -621,43 +621,65 @@ function count_up(item, end_amount, start_amount = 0) {
 */
 
 function count_up(item, end_amount, start_amount = 0, interval_time = 50) {
-  if (end_amount <= start_amount) {
-    return;
-  }
-
-  let current_amount = start_amount;
-
-  const interval = setInterval(() => {
-    item.innerHTML = current_amount;
-    if (end_amount === current_amount) {
-      clearInterval(interval);
+    if (end_amount <= start_amount) {
+        return;
     }
-    current_amount++;
-  }, interval_time);
+
+    let current_amount = start_amount;
+
+    const interval = setInterval(() => {
+        item.innerHTML = current_amount;
+        if (end_amount === current_amount) {
+        clearInterval(interval);
+        }
+        current_amount++;
+    }, interval_time);
 }
 
 function setupIntersectionObserver() {
-  const hoursWastedElement = document.getElementById("hoursWasted");
+    const hoursWastedElement = document.getElementById("hoursWasted");
 
-  if (hoursWastedElement) {
-    const endAmount = parseInt(hoursWastedElement.dataset.value, 10);
-    const observerOptions = {
-      root: null,
-      rootMargin: "0px",
-      threshold: 1.0,
-    };
+    if (hoursWastedElement) {
+        const endAmount = parseInt(hoursWastedElement.dataset.value, 10);
+        const observerOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 1.0,
+        };
 
-    const observer = new IntersectionObserver((entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          count_up(entry.target, endAmount, 0, 543);
-          observer.unobserve(entry.target);
-        }
-      });
-    }, observerOptions);
+        const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+            count_up(entry.target, endAmount, 0, 543);
+            observer.unobserve(entry.target);
+            }
+        });
+        }, observerOptions);
 
-    observer.observe(hoursWastedElement);
-  }
+        observer.observe(hoursWastedElement);
+    }
 }
 
 document.addEventListener("DOMContentLoaded", setupIntersectionObserver);
+
+function wishHappyNewYear() {
+    const currentYear = new Date().getFullYear();
+    const storageKey = `newYearWish-${currentYear}`;
+
+    if (localStorage.getItem(storageKey)) {
+        return;
+    }
+
+    const celebration = {
+        message: "Frohes neues Jahr " + currentYear + "!",
+        fireworks: true,
+        launchedAt: new Date().toISOString(),
+    };
+
+    //console.log(celebration.message);
+    window.alert(celebration.message)
+    
+    localStorage.setItem(storageKey, "true");
+}
+
+document.addEventListener("DOMContentLoaded", wishHappyNewYear);
