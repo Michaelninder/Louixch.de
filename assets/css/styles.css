@@ -1256,8 +1256,8 @@ button.settings-toggle svg path {
 .rocket {
     position: absolute;
     bottom: -50px;
-    width: 32px;
-    height: 32px;
+    width: 64px;
+    height: 64px;
     background-image: url("../../assets/minecraft-items/firework_rocket.png");
     background-size: contain;
     background-repeat: no-repeat;
