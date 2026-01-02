@@ -95,8 +95,8 @@
     const loader = new THREE.TextureLoader();
     loader.setCrossOrigin("anonymous");
 
-    //const texture = loader.load(`https://mineskin.eu/skin/${username}`);
-    const texture = loader.load(`assets/minecraft-skins/2025-Winter.png`);
+    const texture = loader.load(`https://mineskin.eu/skin/${username}`);
+    //const texture = loader.load(`assets/minecraft-skins/2025-Winter.png`);
     texture.magFilter = THREE.NearestFilter;
     texture.minFilter = THREE.NearestFilter;
     texture.colorSpace = THREE.SRGBColorSpace;
