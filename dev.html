@@ -129,8 +129,24 @@
     camera.position.set(0, 0, 32);
     camera.lookAt(0, 0, 0);
 
+    let isHovering = false;
+    let targetRotY = 0;
+
+    el.addEventListener('mouseenter', () => {
+      isHovering = true;
+      targetRotY = Math.PI / 4;
+    });
+
+    el.addEventListener('mouseleave', () => {
+      isHovering = false;
+      targetRotY = 0;
+    });
+
     function animate() {
       requestAnimationFrame(animate);
+      
+      bust.rotation.y += (targetRotY - bust.rotation.y) * 0.1;
+
       renderer.render(scene, camera);
     }
     
