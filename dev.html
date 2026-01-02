@@ -5,23 +5,16 @@
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.05) 100%);
+    background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.1) 100%);
     border-radius: 12px;
     margin: 10px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease;
     cursor: pointer;
     overflow: hidden;
   }
 
-  .mcskin-container:hover {
-    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(0,0,0,0.08) 100%);
-  }
-
   .mcskin-container canvas {
     display: block;
-    max-width: 100%;
-    max-height: 100%;
   }
 </style>
 
@@ -82,6 +75,10 @@
     
     renderer.setSize(width, height);
     renderer.setPixelRatio(window.devicePixelRatio);
+    
+    renderer.colorManagement = true;
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    
     el.appendChild(renderer.domElement);
 
     const loader = new THREE.TextureLoader();
@@ -90,11 +87,14 @@
     const texture = loader.load(`https://mineskin.eu/skin/${username}`);
     texture.magFilter = THREE.NearestFilter;
     texture.minFilter = THREE.NearestFilter;
+    texture.colorSpace = THREE.SRGBColorSpace;
 
-    const material = new THREE.MeshLambertMaterial({ 
+    const material = new THREE.MeshStandardMaterial({ 
       map: texture, 
       transparent: true, 
-      side: THREE.DoubleSide 
+      side: THREE.FrontSide,
+      roughness: 1,
+      metalness: 0
     });
 
     const head = createPart(8, 8, 8, 0, 0, material);
@@ -104,21 +104,27 @@
     body.position.y = -6;
 
     const leftArm = createPart(4, 12, 4, 32, 48, material);
-    leftArm.position.set(-6, -6, 0);
+    leftArm.position.set(-6, -6, 1.5);
+    leftArm.rotation.x = -0.33;
+    leftArm.rotation.y = -0.1;
 
     const rightArm = createPart(4, 12, 4, 40, 16, material);
-    rightArm.position.set(6, -6, 0);
+    rightArm.position.set(6, -6, 1.5);
+    rightArm.rotation.x = -0.35;
+    rightArm.rotation.y = 0.1;
 
     const bust = new THREE.Group();
     bust.add(head, body, leftArm, rightArm);
-    bust.rotation.y = 0.3;
+    bust.rotation.y = 0;
     bust.position.y = 2;
     scene.add(bust);
 
-    const light = new THREE.DirectionalLight(0xffffff, 3.5);
+    const light = new THREE.DirectionalLight(0xffffff, 1.2);
     light.position.set(5, 10, 10);
     scene.add(light);
-    scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+    
+    const ambient = new THREE.AmbientLight(0xffffff, 0.9);
+    scene.add(ambient);
 
     camera.position.set(0, 0, 32);
     camera.lookAt(0, 0, 0);
