@@ -5,7 +5,9 @@
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.1) 100%);
+    background: radial-gradient(circle,
+        rgba(255, 255, 255, 0.05) 0%,
+        rgba(0, 0, 0, 0.1) 100%);
     border-radius: 12px;
     margin: 10px;
     transition: transform 0.3s ease;
@@ -31,7 +33,7 @@
 </script>
 
 <script type="module">
-  import * as THREE from 'three';
+  import * as THREE from "three";
 
   function createPart(w, h, d, uvX, uvY, material) {
     const geometry = new THREE.BoxGeometry(w, h, d);
@@ -40,12 +42,12 @@
     const uvs = geometry.attributes.uv.array;
 
     const faceUvs = [
-      [uvX + d + w, uvY + d, d, h],    
-      [uvX, uvY + d, d, h],           
-      [uvX + d, uvY, w, d],           
-      [uvX + d + w, uvY, w, d],       
-      [uvX + d, uvY + d, w, h],       
-      [uvX + d + w + d, uvY + d, w, h] 
+      [uvX + d + w, uvY + d, d, h],
+      [uvX, uvY + d, d, h],
+      [uvX + d, uvY, w, d],
+      [uvX + d + w, uvY, w, d],
+      [uvX + d, uvY + d, w, h],
+      [uvX + d + w + d, uvY + d, w, h],
     ];
 
     for (let i = 0; i < 6; i++) {
@@ -55,10 +57,14 @@
       const u1 = (x + pw) / canvasW;
       const v1 = 1 - y / canvasH;
       const offset = i * 8;
-      uvs[offset] = u0; uvs[offset + 1] = v1;
-      uvs[offset + 2] = u1; uvs[offset + 3] = v1;
-      uvs[offset + 4] = u0; uvs[offset + 5] = v0;
-      uvs[offset + 6] = u1; uvs[offset + 7] = v0;
+      uvs[offset] = u0;
+      uvs[offset + 1] = v1;
+      uvs[offset + 2] = u1;
+      uvs[offset + 3] = v1;
+      uvs[offset + 4] = u0;
+      uvs[offset + 5] = v0;
+      uvs[offset + 6] = u1;
+      uvs[offset + 7] = v0;
     }
 
     return new THREE.Mesh(geometry, material);
@@ -72,34 +78,34 @@
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    
+
     renderer.setSize(width, height);
     renderer.setPixelRatio(window.devicePixelRatio);
-    
+
     renderer.colorManagement = true;
     renderer.outputColorSpace = THREE.SRGBColorSpace;
-    
+
     el.appendChild(renderer.domElement);
 
     const loader = new THREE.TextureLoader();
-    loader.setCrossOrigin('anonymous');
-    
+    loader.setCrossOrigin("anonymous");
+
     const texture = loader.load(`https://mineskin.eu/skin/${username}`);
     texture.magFilter = THREE.NearestFilter;
     texture.minFilter = THREE.NearestFilter;
     texture.colorSpace = THREE.SRGBColorSpace;
 
-    const material = new THREE.MeshStandardMaterial({ 
-      map: texture, 
-      transparent: true, 
+    const material = new THREE.MeshStandardMaterial({
+      map: texture,
+      transparent: true,
       side: THREE.FrontSide,
       roughness: 1,
-      metalness: 0
+      metalness: 0,
     });
 
     const head = createPart(8, 8, 8, 0, 0, material);
     head.position.y = 4;
-    
+
     const body = createPart(8, 12, 4, 16, 16, material);
     body.position.y = -6;
 
@@ -122,7 +128,7 @@
     const light = new THREE.DirectionalLight(0xffffff, 1.2);
     light.position.set(5, 10, 10);
     scene.add(light);
-    
+
     const ambient = new THREE.AmbientLight(0xffffff, 0.9);
     scene.add(ambient);
 
@@ -131,27 +137,33 @@
 
     let isHovering = false;
     let targetRotY = 0;
+    let targetHeadRotX = 0;
 
-    el.addEventListener('mouseenter', () => {
+    el.addEventListener("mouseenter", () => {
       isHovering = true;
       targetRotY = Math.PI / 4;
+      targetHeadRotX = .2;
     });
 
-    el.addEventListener('mouseleave', () => {
+    el.addEventListener("mouseleave", () => {
       isHovering = false;
       targetRotY = 0;
+      targetHeadRotX = 0;
     });
 
     function animate() {
       requestAnimationFrame(animate);
-      
+
       bust.rotation.y += (targetRotY - bust.rotation.y) * 0.1;
+      //head.position.y += ((5 * Math.random()) - head.position.y) * 0.1;
+      //head.rotation.y += (targetHeadRotX - head.rotation.y) * 0.1; // FUNNY !!!
+      head.rotation.x += (targetHeadRotX - head.rotation.x) * 0.1;
 
       renderer.render(scene, camera);
     }
-    
+
     animate();
   }
 
-  document.querySelectorAll('.mcskin-container').forEach(initSkin);
+  document.querySelectorAll(".mcskin-container").forEach(initSkin);
 </script>
