@@ -1,0 +1,135 @@
+<style>
+  .mcskin-container {
+    width: 200px;
+    height: 250px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.05) 100%);
+    border-radius: 12px;
+    margin: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    overflow: hidden;
+  }
+
+  .mcskin-container:hover {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(0,0,0,0.08) 100%);
+  }
+
+  .mcskin-container canvas {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+  }
+</style>
+
+<div class="mcskin-container" data-username="Louixch"></div>
+<div class="mcskin-container" data-username="Steve"></div>
+<div class="mcskin-container" data-username="Michaelninder"></div>
+
+<script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+    }
+  }
+</script>
+
+<script type="module">
+  import * as THREE from 'three';
+
+  function createPart(w, h, d, uvX, uvY, material) {
+    const geometry = new THREE.BoxGeometry(w, h, d);
+    const canvasW = 64;
+    const canvasH = 64;
+    const uvs = geometry.attributes.uv.array;
+
+    const faceUvs = [
+      [uvX + d + w, uvY + d, d, h],    
+      [uvX, uvY + d, d, h],           
+      [uvX + d, uvY, w, d],           
+      [uvX + d + w, uvY, w, d],       
+      [uvX + d, uvY + d, w, h],       
+      [uvX + d + w + d, uvY + d, w, h] 
+    ];
+
+    for (let i = 0; i < 6; i++) {
+      const [x, y, pw, ph] = faceUvs[i];
+      const u0 = x / canvasW;
+      const v0 = 1 - (y + ph) / canvasH;
+      const u1 = (x + pw) / canvasW;
+      const v1 = 1 - y / canvasH;
+      const offset = i * 8;
+      uvs[offset] = u0; uvs[offset + 1] = v1;
+      uvs[offset + 2] = u1; uvs[offset + 3] = v1;
+      uvs[offset + 4] = u0; uvs[offset + 5] = v0;
+      uvs[offset + 6] = u1; uvs[offset + 7] = v0;
+    }
+
+    return new THREE.Mesh(geometry, material);
+  }
+
+  function initSkin(el) {
+    const username = el.dataset.username;
+    const width = el.clientWidth || 200;
+    const height = el.clientHeight || 250;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    el.appendChild(renderer.domElement);
+
+    const loader = new THREE.TextureLoader();
+    loader.setCrossOrigin('anonymous');
+    
+    const texture = loader.load(`https://mineskin.eu/skin/${username}`);
+    texture.magFilter = THREE.NearestFilter;
+    texture.minFilter = THREE.NearestFilter;
+
+    const material = new THREE.MeshLambertMaterial({ 
+      map: texture, 
+      transparent: true, 
+      side: THREE.DoubleSide 
+    });
+
+    const head = createPart(8, 8, 8, 0, 0, material);
+    head.position.y = 4;
+    
+    const body = createPart(8, 12, 4, 16, 16, material);
+    body.position.y = -6;
+
+    const leftArm = createPart(4, 12, 4, 32, 48, material);
+    leftArm.position.set(-6, -6, 0);
+
+    const rightArm = createPart(4, 12, 4, 40, 16, material);
+    rightArm.position.set(6, -6, 0);
+
+    const bust = new THREE.Group();
+    bust.add(head, body, leftArm, rightArm);
+    bust.rotation.y = 0.3;
+    bust.position.y = 2;
+    scene.add(bust);
+
+    const light = new THREE.DirectionalLight(0xffffff, 3.5);
+    light.position.set(5, 10, 10);
+    scene.add(light);
+    scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+
+    camera.position.set(0, 0, 32);
+    camera.lookAt(0, 0, 0);
+
+    function animate() {
+      requestAnimationFrame(animate);
+      renderer.render(scene, camera);
+    }
+    
+    animate();
+  }
+
+  document.querySelectorAll('.mcskin-container').forEach(initSkin);
+</script>
