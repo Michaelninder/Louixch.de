@@ -705,7 +705,7 @@ function wishHappyNewYear() {
     
         window.alert(celebration_message);
         
-        localStorage.setItem(storageKey, 1);
+        localStorage.setItem(storageKey, );
     
         setTimeout(launchFireworks, 2000);
     }
