@@ -1210,6 +1210,7 @@ button.settings-toggle svg path {
     /*display: flex;*/
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
 .socials-item:hover {
