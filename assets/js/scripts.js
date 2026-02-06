@@ -11,6 +11,7 @@ const body = document.body;
 const nav = document.querySelector("nav");
 const preloader = document.querySelector(".preloader");
 const settingsPopover = document.getElementById("settingsPopover");
+const mc_uuid = 'f4af1633-7110-48af-97ec-f5d84e3cd142';
 
 scrollBtn.style.display = "none";
 
@@ -155,7 +156,7 @@ async function loadProjects() {
                             `;
             container.innerHTML += html;
         });
-    } catch (e) {container.innerHTML ='<div class="card error-msg">Projekte konnten nicht geladen werden.</div>';}
+    } catch (e) { container.innerHTML = '<div class="card error-msg">Projekte konnten nicht geladen werden.</div>'; }
 }
 
 function getBoolFromStorage(key, fallback) {
@@ -338,6 +339,7 @@ function hidePreloader() {
     body.classList.add("loaded");
 }
 
+/*
 const scrollOffsetMap = {
     "#info-cards": 40,
 };
@@ -359,7 +361,7 @@ const handleHashScroll = () => {
             });
         }
     }
-};
+};*/
 
 const bodyIsLoaded = () => body.classList.contains("loaded");
 
@@ -632,7 +634,7 @@ function count_up(item, end_amount, start_amount = 0, interval_time = 50) {
     const interval = setInterval(() => {
         item.innerHTML = current_amount;
         if (end_amount === current_amount) {
-        clearInterval(interval);
+            clearInterval(interval);
         }
         current_amount++;
     }, interval_time);
@@ -644,18 +646,18 @@ function setupIntersectionObserver() {
     if (hoursWastedElement) {
         const endAmount = parseInt(hoursWastedElement.dataset.value, 10);
         const observerOptions = {
-        root: null,
-        rootMargin: "0px",
-        threshold: 1.0,
+            root: null,
+            rootMargin: "0px",
+            threshold: 1.0,
         };
 
         const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-            count_up(entry.target, endAmount, 0, 543);
-            observer.unobserve(entry.target);
-            }
-        });
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    count_up(entry.target, endAmount, 0, 543);
+                    observer.unobserve(entry.target);
+                }
+            });
         }, observerOptions);
 
         observer.observe(hoursWastedElement);
@@ -684,7 +686,7 @@ function launchFireworks() {
         container.appendChild(rocket);
 
         rocket.addEventListener("animationend", () => {
-        rocket.remove();
+            rocket.remove();
         });
     }
 }
@@ -704,14 +706,81 @@ function wishHappyNewYear() {
 
     if (currentMonth === 0) {
         const celebration_message = "Frohes neues Jahr " + currentYear + "!";
-    
+
         window.alert(celebration_message);
-        
-        localStorage.setItem(storageKey, );
-    
+
+        localStorage.setItem(storageKey,);
+
         setTimeout(launchFireworks, 2000);
     }
 
 }
 
+function loadMcTiersStats() {
+    const container = document.getElementById("mcTiersStatsContainer");
+    const modeItemMap = {
+        mace: "mace",
+        axe: "diamond_axe",
+        sword: "diamond_sword",
+        vanilla: "grass_block",
+        uhc: "golden_apple",
+        pot: "potion",
+        neth: "netherite_ingot",
+    };
+
+    if (!container) return;
+
+    fetch(`https://mctiers.com/api/v2/profile/${mc_uuid}`)
+        .then((response) => {
+            if (!response.ok) throw new Error("Network response was not ok");
+            return response.json();
+        })
+        .then((data) => {
+            const rankings = data.rankings;
+            if (!rankings) {
+                container.innerHTML = '<div class="card">No stats found.</div>';
+                return;
+            }
+
+            let html = '<div class="mctiers-grid">';
+
+
+            Object.entries(rankings).forEach(([mode, stats]) => {
+                const itemName = modeItemMap[mode] || mode;
+                const imagePath = `assets/minecraft-items/${itemName}.png`;
+
+                html += `
+          <div class="card mctiers-mode-card">
+            <div class="mctiers-header">
+              <img 
+                src="${imagePath}" 
+                alt="${mode}" 
+                class="minecraft-item"
+                onerror="this.src='assets/minecraft-items/barrier.png';"
+              >
+              <h3 class="card-title">${mode.charAt(0).toUpperCase() + mode.slice(1)
+                    }</h3>
+            </div>
+            <p class="card-content">
+              Aktueller Tier: ${stats.tier || "N/A"} <br> 
+              Höchster Tier: ${stats.peak_tier || "N/A"}
+            </p>
+          </div>
+        `;
+            });
+
+            html += "</div>";
+            container.innerHTML = html;
+        })
+        .catch((error) => {
+            console.error("Error fetching Minecraft Tiers stats:", error);
+            container.innerHTML = `
+        <div class="card error-msg">
+          Fehler beim Laden der Minecraft Tiers Stats.
+        </div>
+      `;
+        });
+}
+
 document.addEventListener("DOMContentLoaded", wishHappyNewYear);
+document.addEventListener("DOMContentLoaded", loadMcTiersStats);
