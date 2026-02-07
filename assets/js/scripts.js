@@ -722,49 +722,46 @@ function loadMcTiersStats() {
         mace: "mace",
         axe: "diamond_axe",
         sword: "diamond_sword",
-        vanilla: "grass_block",
-        uhc: "golden_apple",
         pot: "potion",
-        neth: "netherite_ingot",
     };
 
     if (!container) return;
 
     fetch(`https://mctiers.com/api/v2/profile/${mc_uuid}`)
         .then((response) => {
-            if (!response.ok) throw new Error("Network response was not ok");
+            if (!response.ok) throw new Error("Profile not found");
             return response.json();
         })
         .then((data) => {
             const rankings = data.rankings;
-            if (!rankings) {
-                container.innerHTML = '<div class="card">No stats found.</div>';
-                return;
-            }
+            if (!rankings) return;
 
-            let html = '<div class="mctiers-grid">';
-
+            let html = `
+        <h2 class="section-heading">McTiers Stats</h2>
+        <div class="mctiers-grid">
+      `;
 
             Object.entries(rankings).forEach(([mode, stats]) => {
-                const itemName = modeItemMap[mode] || mode;
+                const itemName = modeItemMap[mode] || "iron_sword";
                 const imagePath = `assets/minecraft-items/${itemName}.png`;
 
                 html += `
-          <div class="card mctiers-mode-card">
+          <div class="card mctiers-card">
             <div class="mctiers-header">
-              <img 
-                src="${imagePath}" 
-                alt="${mode}" 
-                class="minecraft-item"
-                onerror="this.src='assets/minecraft-items/barrier.png';"
-              >
+              <img src="${imagePath}" class="minecraft-item mctiers-icon" alt="${mode}">
               <h3 class="card-title">${mode.charAt(0).toUpperCase() + mode.slice(1)
                     }</h3>
             </div>
-            <p class="card-content">
-              Aktueller Tier: ${stats.tier || "N/A"} <br> 
-              Höchster Tier: ${stats.peak_tier || "N/A"}
-            </p>
+            <div class="card-content">
+              <div class="tier-row">
+                <span class="text-muted">Aktuelle Tier:</span>
+                <span class="tier-value">${stats.tier || "N/A"}</span>
+              </div>
+              <div class="tier-row">
+                <span class="text-muted">Höchste Tier:</span>
+                <span class="tier-value">${stats.peak_tier || "N/A"}</span>
+              </div>
+            </div>
           </div>
         `;
             });
@@ -773,12 +770,8 @@ function loadMcTiersStats() {
             container.innerHTML = html;
         })
         .catch((error) => {
-            console.error("Error fetching Minecraft Tiers stats:", error);
-            container.innerHTML = `
-        <div class="card error-msg">
-          Fehler beim Laden der Minecraft Tiers Stats.
-        </div>
-      `;
+            console.error("McTiers Error:", error);
+            container.innerHTML = `<p class="error-msg">Fehler beim Laden der McTiers Statistiken.</p>`;
         });
 }
 
